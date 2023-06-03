@@ -1,7 +1,7 @@
 # SRS for Flashcard Management Application
 
 ## 1. Introduction
-The main purpose of the Flashcard Management App is to facilitate effective and organized learning through the use of digital flashcards. It is a tool designed to enhance the learning experience by helping users effectively manage their flashcard collections, create personalized study playlists, view flashcard data of various types, and track their learning progress through comprehensive statistics. The app leverages unique features such as a spaced repetition algorithm, stats analysis, and intuitive user interfaces to provide an efficient learning environment. It is intended to be implemented as a web application or as an installable applications on computers or smartphones.
+The main purpose of the Flashcard Management App is to facilitate effective and organized learning through the use of digital flashcards. It is a tool designed to enhance the learning experience by helping users effectively manage their flashcard collections, create personalized study playlists, view flashcard data of various types, and track their learning progress through comprehensive statistics. The app leverages unique features such as a spaced repetition algorithm, stats analysis, and intuitive user interfaces to provide an efficient learning environment. It is intended to be implemented as a web application or as an installable application on computers or with additional modifications for smartphones.
 
 ## 2. Database Structure
 The application relies on the following databases to store and manage flashcard data:
@@ -16,6 +16,7 @@ The application relies on the following databases to store and manage flashcard 
 	- i.e. `FlashcardAnswers` to track the number of flashcards answered correctly, the total number of flashcards attempted, and calculate correctness rates.
 
 ## 3. Functionalities
+The list of base functionalities that can be expanded in the future. 
 
 ### 3.1. Collection Management
 The Collection Management module is responsible for managing flashcard decks. It includes the following functionalities:
