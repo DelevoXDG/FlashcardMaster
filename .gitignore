@@ -447,8 +447,22 @@ samples/features/sql-management-objects/src/out/CodeCoverage/CodeCoverage.config
 /vendor/
 
 ## Visual Studio Code
-.vscode/
-.history/
+**.vscode/
+**.vs/*
+*.code-workspace
+.terminal-presets.json 
+
+# Python
+**__pycache__/
+**.mypy_cache/
+!.py
+
+#Personal
+**[ _][Mm]isc
+**[ _][Rr]ef
+
+# Tests
+**[ _][Tt]ests/
 
 ## Personal files and folders
 **_[Rr][Ee][Ff]
