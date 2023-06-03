@@ -1,2 +1,2 @@
-# io.projects
-Projekty realizowane na kursie "Inżynieria oprogramowania"
+# io_project
+
