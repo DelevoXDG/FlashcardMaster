@@ -26,8 +26,7 @@ The Collection Management module is responsible for managing flashcard decks. It
 	- Allow users to select, add, remove, merge and modify decks.
 2. **Import and Export Decks**
 	- Enable users to import flashcard decks from external sources and export decks for sharing or backup purposes.
-3. **Statistics Button**
-4. **Study Playlist Creation:** 
+3. **Study Playlist Creation:** 
 	- Allow users to create study playlists based on one or several selected decks.
 
 ### 3.2. Study Playlist Creation
