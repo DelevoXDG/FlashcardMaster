@@ -7,7 +7,7 @@ The main purpose of the Flashcard Management App is to facilitate effective and 
 The application relies on the following databases to store and manage flashcard data:
 
 1. `Decks`:
-	- stores information about the flashcard decks created, including deck titles, cover images and number of cards discovered or mastered.
+	- stores information about the flashcard decks created, including deck titles, cover images.
 2. `Flashcards`:
 	- stores information about individual flashcards, including their type, question, answer, difficulty level, and data related to revision intervals.
 3. Categorization:
@@ -22,7 +22,7 @@ The list of base functionalities that can be expanded in the future.
 The Collection Management module is responsible for managing flashcard decks. It includes the following functionalities:
 
 1. **Deck Listing:**
-	- Display a list of decks with their titles and cover images.
+	- Display a list of decks with their relevant info, including titles, cover images and number of cards discovered or mastered.
 	- Allow users to select, add, remove, and modify decks.
 3. **Import and Export Decks**
 	- Enable users to import flashcard decks from external sources and export decks for sharing or backup purposes.
