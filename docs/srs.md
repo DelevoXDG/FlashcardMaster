@@ -7,7 +7,7 @@ The main purpose of the Flashcard Management App is to facilitate effective and 
 The application relies on the following databases to store and manage flashcard data:
 
 1. `Decks`:
-	- stores information about the flashcard decks created, including deck titles and cover images.
+	- stores information about the flashcard decks created, including deck titles, cover images and number of cards discovered or mastered.
 2. `Flashcards`:
 	- stores information about individual flashcards, including their type, question, answer, difficulty level, and data related to revision intervals.
 3. Categorization:
