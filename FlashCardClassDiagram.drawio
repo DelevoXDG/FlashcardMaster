@@ -1,25 +1,31 @@
-<mxfile host="app.diagrams.net" modified="2023-06-04T18:33:31.230Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" version="21.1.8" etag="_BFKhpjv8QJieZ2cHucI" type="device">
+<mxfile host="app.diagrams.net" modified="2023-06-04T18:45:00.539Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="h2uAXx_uYFbaby0tkxrJ" version="21.3.7" type="device">
   <diagram id="_aku2J9CaDRdqY9cNowp" name="Strona-1">
-    <mxGraphModel dx="2520" dy="1751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1763" dy="1269" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="oD8n439q8cryQLi9cJ61-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=open;endFill=0;endSize=12;dashed=1;" edge="1" parent="1" source="node12" target="node2">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="oD8n439q8cryQLi9cJ61-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;endSize=12;dashed=1;" parent="1" source="hA-KMVNgMWIx6BcUmMR6-1" target="node2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2446" y="558.5000000000002" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="oD8n439q8cryQLi9cJ61-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;endArrow=open;endFill=0;dashed=1;" edge="1" parent="1" source="node12" target="node11">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="oD8n439q8cryQLi9cJ61-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;endArrow=open;endFill=0;dashed=1;" parent="1" source="hA-KMVNgMWIx6BcUmMR6-1" target="node11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2283" y="370" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2339" y="260" />
+              <mxPoint x="2339" y="148" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="oD8n439q8cryQLi9cJ61-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endSize=12;dashed=1;endArrow=open;endFill=0;jumpStyle=arc;jumpSize=6;" edge="1" parent="1" source="node12" target="node6">
+        <mxCell id="oD8n439q8cryQLi9cJ61-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endSize=12;dashed=1;endArrow=open;endFill=0;jumpStyle=arc;jumpSize=6;" parent="1" source="hA-KMVNgMWIx6BcUmMR6-1" target="node6" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2283" y="910" />
               <mxPoint x="1268" y="910" />
             </Array>
+            <mxPoint x="2283" y="746.9999999999998" as="sourcePoint" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="node12" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DBManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ addFlashcard(Flashcard): void&lt;br/&gt;+ getDecks(): List&amp;lt;Deck&amp;gt;&lt;br/&gt;+ removeCategory(String): void&lt;br/&gt;+ removeFlashcard(Flashcard): void&lt;br/&gt;+ addFlashcardAnswer(FlashcardAnswer): void&lt;br/&gt;+ getCategories(): List&amp;lt;String&amp;gt;&lt;br/&gt;+ getFlashcardAnswers(): List&amp;lt;FlashcardAnswer&amp;gt;&lt;br/&gt;+ addCategory(String): void&lt;br/&gt;+ addDeck(Deck): void&lt;br/&gt;+ editFlashcard(Flashcard): void&lt;br/&gt;+ removeFlashcardAnswer(FlashcardAnswer): void&lt;br/&gt;+ editDeck(Deck): void&lt;br/&gt;+ editFlashcardAnswer(FlashcardAnswer): void&lt;br/&gt;+ removeDeck(Deck): void&lt;br/&gt;+ getFlashcards(): List&amp;lt;Flashcard&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" parent="1" vertex="1">
-          <mxGeometry x="2120" y="370" width="326" height="377" as="geometry" />
         </mxCell>
         <mxCell id="node11" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Deck&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- flashcards: List&amp;lt;Flashcard&amp;gt;&lt;br&gt;- id: int&lt;br&gt;- title: String&lt;br&gt;- coverImage: Image&lt;/p&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- category: String&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ size(): int&lt;br&gt;+ get(int): Flashcard&lt;br&gt;+ setCoverImage(String): void&lt;br&gt;+ setId(int): void&lt;br&gt;+ setTitle(String): void&lt;br&gt;+ removeFlashCard(Flashcard): void&lt;br&gt;+ getCoverImage(): String&lt;br&gt;+ getTitle(): String&lt;br&gt;+ addFlashCard(Flashcard): void&lt;br&gt;+ getId(): int&lt;/p&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getCategory(): String&lt;/p&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ setCategory(String): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="1715" y="40" width="235" height="430" as="geometry" />
@@ -33,10 +39,10 @@
         <mxCell id="node2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FlashcardAnswer&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- numberOfGoodAnswers: int&lt;br/&gt;- flashcardId: int&lt;br/&gt;- numberOfAllAnswers: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getNumberOfAllAnswers(): int&lt;br/&gt;+ setNumberOfAllAnswers(int): void&lt;br/&gt;+ getNumberOfGoodAnswers(): int&lt;br/&gt;+ setNumberOfGoodAnswers(int): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="2636" y="417" width="247" height="211" as="geometry" />
         </mxCell>
-        <mxCell id="oD8n439q8cryQLi9cJ61-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endSize=12;endArrow=open;endFill=0;dashed=1;" edge="1" parent="1" source="node1" target="node3">
+        <mxCell id="oD8n439q8cryQLi9cJ61-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endSize=12;endArrow=open;endFill=0;dashed=1;" parent="1" source="node1" target="node3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="oD8n439q8cryQLi9cJ61-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endSize=12;endArrow=open;endFill=0;dashed=1;" edge="1" parent="1" source="node1" target="node6">
+        <mxCell id="oD8n439q8cryQLi9cJ61-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endSize=12;endArrow=open;endFill=0;dashed=1;" parent="1" source="node1" target="node6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="node1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FlashcardFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ createMultipleChoiceFlashcard(String, List&amp;lt;String&amp;gt;, String, Difficulty): Flashcard&lt;br/&gt;+ createTextFlashcard(String, String, Difficulty): Flashcard&lt;br/&gt;+ createTrueFalseFlashcard(String, boolean, Difficulty): Flashcard&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" parent="1" vertex="1">
@@ -54,7 +60,7 @@
         <mxCell id="node5" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Playlist&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- flashcards: List&amp;lt;Flashcard&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ size(): int&lt;br/&gt;+ get(int): Flashcard&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="888" y="211" width="189" height="129" as="geometry" />
         </mxCell>
-        <mxCell id="oD8n439q8cryQLi9cJ61-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;endArrow=open;endFill=0;endSize=12;" edge="1" parent="1" source="node13" target="node3">
+        <mxCell id="oD8n439q8cryQLi9cJ61-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;endArrow=open;endFill=0;endSize=12;" parent="1" source="node13" target="node3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="node13" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PlaylistBuilder&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- studyType: StudyType&lt;br/&gt;- decks: List&amp;lt;Deck&amp;gt;&lt;br/&gt;- difficulty: Difficulty&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ setDifficulty(Difficulty): void&lt;br/&gt;+ removeDeck(Deck): void&lt;br/&gt;+ setStudyType(StudyType): void&lt;br/&gt;+ addDeck(Deck): void&lt;br/&gt;+ build(): Playlist&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" parent="1" vertex="1">
@@ -149,6 +155,9 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <Array as="points" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="hA-KMVNgMWIx6BcUmMR6-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;DBManager&lt;/b&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- instance: DBManager&lt;br&gt;&lt;/p&gt;&lt;hr style=&quot;border-color: var(--border-color);&quot; size=&quot;1&quot;&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px; line-height: 1.6;&quot;&gt;- DBManager()&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px; line-height: 1.6;&quot;&gt;+ getInstance(): DBManager&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px; line-height: 1.6;&quot;&gt;+ addFlashcard(Flashcard): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ getDecks(): List&amp;lt;Deck&amp;gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ removeCategory(String): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ removeFlashcard(Flashcard): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ addFlashcardAnswer(FlashcardAnswer): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ getCategories(): List&amp;lt;String&amp;gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ getFlashcardAnswers(): List&amp;lt;FlashcardAnswer&amp;gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ addCategory(String): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ addDeck(Deck): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ editFlashcard(Flashcard): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ removeFlashcardAnswer(FlashcardAnswer): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ editDeck(Deck): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ editFlashcardAnswer(FlashcardAnswer): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ removeDeck(Deck): void&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;+ getFlashcards(): List&amp;lt;Flashcard&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="2200" y="260" width="340" height="460" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
