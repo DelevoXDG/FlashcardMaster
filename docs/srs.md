@@ -36,11 +36,11 @@ The Playlist Creation module allows users to create study playlists based on sel
 1. **Flashcard Deck Selection:**
 	- Allow users to select one or more flashcard decks to include in the playlist.
 2. **Difficulty Selection:**
-	- e.g. light or hard.
-	- Sort the flashcards within the playlist based on the selected difficulty level.
+	- e.g. light, hard or random.
+	- Sort the flashcards within the playlist based on the selected difficulty level or order them randomly based on user's preference.
 3. **Study Type Customization:**
-	- e.g. revision or learning.
-	- Sort the flashcards within the playlist based on the selected study type.
+	- e.g. revision, learning or random.
+	- Sort the flashcards within the playlist based on the selected study type or order them randomly based on user's preference.
 
 ### 3.3. Flashcard Display
 Once the playlist is created the study session can be started. It supports different modes such as:
@@ -55,7 +55,7 @@ Once the playlist is created the study session can be started. It supports diffe
 It also supports:
 
 1. **Intelligent Card Sorting:**
-	- Smart sorting to prioritize flashcards based on their difficulty level, last review date and preferences selected upon playlist creation.
+	- Smart sorting to prioritize flashcards based on their last review date and preferences selected upon playlist creation.
 
 ### 3.4. Card Management
 The Card Management module focuses on managing individual flashcards within a deck. It includes the following functionalities:
