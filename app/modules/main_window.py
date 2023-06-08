@@ -15,6 +15,17 @@ from modules.models import Deck, engine
 from modules.deck_widget import DeckWidget
 
 
+class DeckTableModel(QStandardItemModel):
+    def __init__(self, decks):
+        super().__init__()
+        self.decks = decks
+
+    def data(self, index, role):
+        if role == Qt.DisplayRole:
+            deck = self.decks[index.row()]
+            return deck.title
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()

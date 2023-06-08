@@ -8,23 +8,28 @@ global dbNames
 
 
 class dbNames:
-    DB_Name = "flashcard_app"
+    DB_PATH = "sqlite:///app/Flashcard_app.db"
     Decks = "Decks"
-    FlashCards = "Flashcards"
+    Flashcards = "Flashcards"
     Categories = "Categories"
     FlashcardAnswers = "FlashcardAnswers"
+    SingleDeck = "Deck"
+    SingleFlashcard = "Flashcard"
+    SingleCategory = "Category"
+    SingleFlashcardAnswer = "FlashcardAnswer"
 
 
 class Deck(Base):
     __tablename__ = dbNames.Decks
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    cover_image = Column(String)
 
-    Flashcards = relationship("Flashcard", back_populates=dbNames.Decks)
+    Flashcards = relationship(
+        dbNames.SingleFlashcard, back_populates=dbNames.SingleDeck
+    )
 
     def __repr__(self):
-        return f"<Deck(id={self.id}, title='{self.title}', cover_image='{self.cover_image}')>"
+        return f"<Deck(id={self.id}, title='{self.title}')>"
 
 
 class Flashcard(Base):
@@ -34,12 +39,12 @@ class Flashcard(Base):
     question = Column(String)
     answer = Column(String)
     difficulty_level = Column(Integer)
-    deck_id = Column(Integer, ForeignKey(f"{dbNames.Decks}.id"))
+    Deck_id = Column(Integer, ForeignKey(f"{dbNames.Decks}.id"))
 
-    deck = relationship("Deck", back_populates=dbNames.Flashcards)
+    Deck = relationship(dbNames.SingleDeck, back_populates=dbNames.Flashcards)
 
     def __repr__(self):
-        return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, deck_id={self.deck_id})>"
+        return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
 
 
 class Category(Base):
@@ -54,13 +59,13 @@ class Category(Base):
 class FlashcardAnswer(Base):
     __tablename__ = dbNames.FlashcardAnswers
     id = Column(Integer, primary_key=True)
-    flashcard_id = Column(Integer, ForeignKey(f"{dbNames.Flashcards}.id"))
+    Flashcard_id = Column(Integer, ForeignKey(f"{dbNames.Flashcards}.id"))
     is_correct = Column(Integer)
 
-    flashcard = relationship("Flashcard")
+    Flashcard = relationship("Flashcard")
 
     def __repr__(self):
-        return f"<FlashcardAnswer(id={self.id}, flashcard_id={self.flashcard_id}, is_correct={self.is_correct})>"
+        return f"<FlashcardAnswer(id={self.id}, Flashcard_id={self.Flashcard_id}, is_correct={self.is_correct})>"
 
 
 class EngineSingleton:
@@ -79,9 +84,11 @@ class EngineSingleton:
         return self._engine
 
     def _create_engine(self):
-        engine = create_engine("sqlite:///app/flashcard_app.db")
+        engine = create_engine("sqlite:///app/Flashcard_app.db")
+        self._init_db(engine)
+        return engine
 
-    def _populate_engine(self):
+    def _init_db(self, engine):
         inspector = inspect(engine)
         if not inspector.has_table(dbNames.Decks):
             Base.metadata.create_all(engine)
@@ -89,12 +96,3 @@ class EngineSingleton:
 
 global engine
 engine = EngineSingleton().engine
-# engine = create_engine('sqlite:///app/flashcard_app.db')
-
-# Session = sessionmaker(bind=engine)
-# session = Session()
-# inspector = inspect(engine)
-# if not inspector.has_table('decks'):
-#     Base.metadata.create_all(engine)
-
-# session.close()
