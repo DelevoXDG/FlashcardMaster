@@ -38,25 +38,40 @@ from .deck_model import get_deck_table_model
 #             return deck.title
 
 
+def test_adding_decks():
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    deck1 = Deck(title="Mathematics")
+    deck2 = Deck(title="History")
+    deck3 = Deck(title="Science")
+    session.add_all([deck1, deck2, deck3])
+    session.commit()
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        test_adding_decks()
         self.setWindowTitle("Flashcard Master")
 
         self.setFixedSize(700, 480)
         self.model = get_deck_table_model()
         self.model.refresh()
         self.view = QTableView()
+        main_widget = QWidget(self)
+        layout = QVBoxLayout(main_widget)
+        main_widget.setLayout(layout)
+        self.setCentralWidget(main_widget)
         self.view.setModel(self.model)
         self.view.resizeColumnsToContents()
 
         self.view.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
 
-        layout = QVBoxLayout(self)
+        # layout = QVBoxLayout(self)
         layout.addWidget(self.view)
 
-        self.layout = layout
-        self.setLayout(self.layout)
+        # self.layout = layout
+        # self.setLayout(self.layout)
 
     # def __init__(self):
     #     super().__init__()

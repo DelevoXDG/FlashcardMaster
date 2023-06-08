@@ -25,7 +25,7 @@ def get_deck_table_model():
 
     columns = [
         AlchemizedModelColumn(column=column, column_name=column.name, flags=dict())
-        for column in Flashcard.__table__.columns
+        for column in Deck.__table__.columns
     ]
 
     # for column in columns:
