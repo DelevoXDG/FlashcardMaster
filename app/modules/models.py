@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, inspect, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, sessionmaker, declarative_base
+from sqlalchemy.orm import relationship, sessionmaker, declarative_base, scoped_session
 from sqlalchemy import create_engine
 
 Base = declarative_base()
@@ -21,7 +21,7 @@ class dbNames:
 
 class Deck(Base):
     __tablename__ = dbNames.Decks
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     title = Column(String)
 
     Flashcards = relationship(
@@ -34,7 +34,7 @@ class Deck(Base):
 
 class Flashcard(Base):
     __tablename__ = dbNames.Flashcards
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     card_type = Column(Integer)
     question = Column(String)
     answer = Column(String)
@@ -49,7 +49,7 @@ class Flashcard(Base):
 
 class Category(Base):
     __tablename__ = dbNames.Categories
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String)
 
     def __repr__(self):
@@ -58,7 +58,7 @@ class Category(Base):
 
 class FlashcardAnswer(Base):
     __tablename__ = dbNames.FlashcardAnswers
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     Flashcard_id = Column(Integer, ForeignKey(f"{dbNames.Flashcards}.id"))
     is_correct = Column(Integer)
 
@@ -92,6 +92,13 @@ class EngineSingleton:
         inspector = inspect(engine)
         if not inspector.has_table(dbNames.Decks):
             Base.metadata.create_all(engine)
+
+
+def get_scoped_session():
+    engine = EngineSingleton().engine
+    session_factory = sessionmaker(bind=engine)
+    Session = scoped_session(session_factory)
+    return Session
 
 
 global engine
