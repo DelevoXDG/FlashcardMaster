@@ -1,40 +1,26 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout
-from PyQt6.QtGui import QColor, QPixmap
+from .models import Deck
+from . import get_scoped_session
 
-from modules.models import Deck
-
-from modules import AlchemizedModelColumn
-from .models import Flashcard
-from .models import get_scoped_session
+from . import AlchemizedColumn
 from .alchemical_model import AlchemicalTableModel
 
 
-def get_deck_table_model():
-    """Return a list of tuples on which each tuple is composed of:
-    (column: sqlalchemy.sql.schema.Column,
-        sql_alchemy_column_name: str,
-        header_display_name: str,
-        flags: dict)
-    """
+class DeckTableModel(AlchemicalTableModel):
+    def __init__(self):
+        col_extra_properties = {
+            "title": {"display_name": "Title", "flags": {"editable": True}}
+        }
 
-    column_extra_header_display_flags = {
-        "title": {"display_name": "Title", "flags": {"editable": True}}
-    }
+        cols = [
+            AlchemizedColumn(column=col, column_name=col.name, flags=dict())
+            for col in Deck.__table__.columns
+        ]
 
-    columns = [
-        AlchemizedModelColumn(column=column, column_name=column.name, flags=dict())
-        for column in Deck.__table__.columns
-    ]
+        for col in cols:
+            for name, extra_values in col_extra_properties.items():
+                if name == col.column_name:
+                    col.header_display_name = extra_values.get("display_name", "")
+                    col.flags = extra_values.get("flags", dict())
 
-    for column in columns:
-        for column_name, extra_values in column_extra_header_display_flags.items():
-            if column_name == column.column_name:
-                column.header_display_name = extra_values.get("display_name", "")
-                column.flags = extra_values.get("flags", dict())
-
-    return AlchemicalTableModel(
-        session=get_scoped_session(),
-        model=Deck,
-        relationship=Deck.Flashcards,
-        columns=columns,
-    )
+        session = get_scoped_session()
+        super().__init__(session, Deck, Deck.Flashcards, cols)
