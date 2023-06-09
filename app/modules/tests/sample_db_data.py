@@ -1,5 +1,7 @@
-from app.modules.models import Deck
-from app.modules import get_scoped_session
+from .. import (
+    get_scoped_session,
+    Deck,
+)
 
 
 def add_sample_decks():

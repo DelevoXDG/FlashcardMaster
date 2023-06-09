@@ -1,4 +1,4 @@
-from .models import Deck
+from . import Deck
 from . import get_scoped_session
 
 from . import AlchemizedColumn

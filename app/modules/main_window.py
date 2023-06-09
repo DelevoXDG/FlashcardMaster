@@ -1,3 +1,4 @@
+import os
 from PyQt6.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
@@ -10,31 +11,18 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import (
     QSize,
 )
-from PyQt6 import uic
-
-
 from PyQt6.QtGui import (
     QStandardItemModel,
     QStandardItem,
 )
+from PyQt6 import uic
+from . import (
+    Deck,
+    engine,
+    DeckTableModel,
+)
 
-import sys
-import os
-from sqlalchemy.orm import sessionmaker
-
-
-# current_dir = os.path.dirname(os.path.abspath(__file__))
-# parent_dir = os.path.dirname(current_dir)
-# sys.path.append(parent_dir)
-
-from .models import Deck
-from .models import engine
-from . import DeckTableModel
-
-# from modules.deck_widget import DeckWidget
-
-
-from tests.sample_db_data import add_sample_decks
+from .tests import sample_db_data as dbtest
 
 
 class MainWindow(QMainWindow):
@@ -50,7 +38,8 @@ class MainWindow(QMainWindow):
         # layout = QVBoxLayout(main_widget)
         # main_widget.setLayout(layout)
         # self.setCentralWidget(main_widget)
-        # test_adding_decks()
+
+        # dbtest.add_sample_decks()
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ui_path = os.path.join(current_dir, "ui", "main_window.ui")

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from sqlalchemy.sql.schema import Column
 
-from .models import get_scoped_session
+from .database_models import *
 
 
 @dataclass
