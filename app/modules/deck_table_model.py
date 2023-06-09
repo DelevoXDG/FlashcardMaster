@@ -16,11 +16,9 @@ def get_deck_table_model():
         header_display_name: str,
         flags: dict)
     """
-    # TODO: have this as a constant at the top of this module
-    # Basically changing a column name to be something else
 
     column_extra_header_display_flags = {
-        "created_ts": {"display_name": "Asked@", "flags": {"editable": True}}
+        "title": {"display_name": "Title", "flags": {"editable": True}}
     }
 
     columns = [
@@ -28,11 +26,11 @@ def get_deck_table_model():
         for column in Deck.__table__.columns
     ]
 
-    # for column in columns:
-    #     for column_name, extra_values in column_extra_header_display_flags.items():
-    #         if column_name == column.column_name:
-    #             column.header_display_name = extra_values.get("display_name", "")
-    #             column.flags = extra_values.get("flags", dict())
+    for column in columns:
+        for column_name, extra_values in column_extra_header_display_flags.items():
+            if column_name == column.column_name:
+                column.header_display_name = extra_values.get("display_name", "")
+                column.flags = extra_values.get("flags", dict())
 
     return AlchemicalTableModel(
         session=get_scoped_session(),

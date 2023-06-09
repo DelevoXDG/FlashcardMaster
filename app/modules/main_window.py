@@ -51,7 +51,6 @@ def test_adding_decks():
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        test_adding_decks()
         self.setWindowTitle("Flashcard Master")
 
         self.setFixedSize(700, 480)

@@ -133,7 +133,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         name = self.fields[index.column()].column_name
 
         try:
-            setattr(row, name, value.toString())
+            setattr(row, name, str(value))
             self.session.commit()
         except Exception as e:
             QMessageBox.critical(None, "SQL Input Error", str(e))
