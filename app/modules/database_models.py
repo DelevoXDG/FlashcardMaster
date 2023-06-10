@@ -23,10 +23,12 @@ class Deck(Base):
     __tablename__ = dbNames.Decks
     id = Column(Integer, autoincrement=True, primary_key=True)
     title = Column(String)
+    Category_id = Column(Integer, ForeignKey(f"{dbNames.Categories}.id"))
 
     Flashcards = relationship(
         dbNames.SingleFlashcard, back_populates=dbNames.SingleDeck
     )
+    Category = relationship(dbNames.SingleCategory, back_populates=dbNames.Decks)
 
     def __repr__(self):
         return f"<Deck(id={self.id}, title='{self.title}')>"
@@ -51,6 +53,7 @@ class Category(Base):
     __tablename__ = dbNames.Categories
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String)
+    Decks = relationship(dbNames.SingleDeck, back_populates=dbNames.SingleCategory)
 
     def __repr__(self):
         return f"<Category(id={self.id}, name='{self.name}')>"

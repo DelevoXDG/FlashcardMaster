@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtCore import QAbstractTableModel, QVariant, QModelIndex, Qt
 from sqlalchemy.orm import joinedload
 import logging
-from modules import AlchemizedModelColumn
+from modules import AlchemizedColumn
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -12,14 +12,14 @@ log.setLevel(logging.DEBUG)
 class AlchemicalTableModel(QAbstractTableModel):
     """A Qt Table Model that binds to an SQL Alchemy Query"""
 
-    def __init__(self, session, model, relationship, columns):
+    def __init__(self, session, db_model, relationship, columns):
         super().__init__()
         # TODO: session and model might not be needed if just an instance of 'DBInteractions' is passed
         self.session = session()
         self.relationship = relationship
-        self.query = self.session.query(model)
+        self.query = self.session.query(db_model)
         log.debug(f"Passed columns: {columns}")
-        self.fields: list[AlchemizedModelColumn] = columns
+        self.fields: list[AlchemizedColumn] = columns
 
         self.results = None
         self.count = None
@@ -28,7 +28,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         # The relation between 'question'->'user' table is done through the foreign key "user_id" on the question table
         # If more foreign keys are added into the Question model, consider changing this conditional
         self.column_name_w_foreign_key = (
-            AlchemicalTableModel.get_column_name_w_foreign_key(model)
+            AlchemicalTableModel.get_column_name_w_foreign_key(db_model)
         )
 
         self.refresh()
@@ -133,7 +133,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         name = self.fields[index.column()].column_name
 
         try:
-            setattr(row, name, value.toString())
+            setattr(row, name, str(value))
             self.session.commit()
         except Exception as e:
             QMessageBox.critical(None, "SQL Input Error", str(e))
@@ -141,6 +141,50 @@ class AlchemicalTableModel(QAbstractTableModel):
         else:
             self.dataChanged.emit(index, index)
             return True
+
+    def removeRow(self, row):
+        if 0 <= row < len(self.results):
+            item = self.results[row]
+
+            try:
+                self.session.delete(item)
+                self.session.commit()
+                # self.refresh()
+            except Exception as e:
+                QMessageBox.critical(None, "SQL Delete Error", str(e))
+                return False
+            else:
+                self.beginRemoveRows(QModelIndex(), row, row)
+                del self.results[row]
+                # self.count -= 1
+                self.endRemoveRows()
+                self.refresh()
+
+                return True
+
+        return False
+
+    def removeRows(self, rows):
+        rows.sort(reverse=True)
+
+        for row in rows:
+            if 0 <= row < len(self.results):
+                item = self.results[row]
+
+                try:
+                    self.session.delete(item)
+                    self.session.commit()
+                    del self.results[row]
+                    self.count -= 1
+                except Exception as e:
+                    QMessageBox.critical(None, "SQL Delete Error", str(e))
+                    return False
+
+        self.beginRemoveRows(QModelIndex(), rows[0], rows[-1])
+        self.endRemoveRows()
+        self.refresh()
+
+        return True
 
     def setSorting(self, column, order=Qt.SortOrder.DescendingOrder):
         """Sort table by given column number."""

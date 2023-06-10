@@ -1,3 +1,4 @@
+import os
 from PyQt6.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
@@ -7,109 +8,63 @@ from PyQt6.QtWidgets import (
     QTableView,
     QAbstractItemView,
 )
+from PyQt6.QtCore import (
+    QSize,
+)
+from PyQt6.QtGui import (
+    QStandardItemModel,
+    QStandardItem,
+)
+from PyQt6 import uic
+from . import (
+    Deck,
+    engine,
+    DeckTableModel,
+)
 
-from PyQt6.QtGui import QStandardItemModel, QStandardItem
+from .tests import sample_db_data as dbtest
 
-import sys
-import os
-from sqlalchemy.orm import sessionmaker
+import logging
 
-
-# current_dir = os.path.dirname(os.path.abspath(__file__))
-# parent_dir = os.path.dirname(current_dir)
-# sys.path.append(parent_dir)
-
-from .models import Deck
-from .models import engine
-from .alchemical_model import AlchemicalTableModel
-from .deck_model import get_deck_table_model
-
-# from modules.deck_widget import DeckWidget
-
-
-# class DeckTableModel(QStandardItemModel):
-#     def __init__(self, decks):
-#         super().__init__()
-#         self.decks = decks
-
-#     def data(self, index, role):
-#         if role == Qt.DisplayRole:
-#             deck = self.decks[index.row()]
-#             return deck.title
-
-
-def test_adding_decks():
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    deck1 = Deck(title="Mathematics")
-    deck2 = Deck(title="History")
-    deck3 = Deck(title="Science")
-    session.add_all([deck1, deck2, deck3])
-    session.commit()
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        test_adding_decks()
         self.setWindowTitle("Flashcard Master")
 
-        self.setFixedSize(700, 480)
-        self.model = get_deck_table_model()
-        self.model.refresh()
-        self.view = QTableView()
-        main_widget = QWidget(self)
-        layout = QVBoxLayout(main_widget)
-        main_widget.setLayout(layout)
-        self.setCentralWidget(main_widget)
+        self.model = DeckTableModel()
+        # dbtest.add_sample_decks()
+
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(current_dir, "ui", "main_window.ui")
+        uic.loadUi(ui_path, self)
+
         self.view.setModel(self.model)
+        self.view.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.view.resizeColumnsToContents()
 
-        self.view.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.selection_model = self.view.selectionModel()
+        self.delete_button.clicked.connect(self.delete_records)
+        self.delete_button.setEnabled(False)
+        self.create_playlist_button.setEnabled(False)
+        self.export_button.setEnabled(False)
+        self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
 
-        # layout = QVBoxLayout(self)
-        layout.addWidget(self.view)
+        self.model.refresh()
 
-        # self.layout = layout
-        # self.setLayout(self.layout)
+    def toggle_buttons_selection(self):
+        """Toggle button enabled state based on selection"""
+        self.delete_button.setEnabled(self.selection_model.hasSelection())
+        self.create_playlist_button.setEnabled(self.selection_model.hasSelection())
+        self.export_button.setEnabled(
+            self.selection_model.hasSelection()
+            and len(self.selection_model.selectedRows()) == 1
+        )
 
-    # def __init__(self):
-    #     super().__init__()
-
-    #     self.setWindowTitle("Flashcard Management App")
-
-    #     main_widget = QWidget(self)
-    #     layout = QVBoxLayout(main_widget)
-
-    #     label = QLabel("Deck Collection")
-    #     layout.addWidget(label)
-
-    #     Session = sessionmaker(bind=engine)
-    #     session = Session()
-    #     # deck1 = Deck(title="Mathematics")
-    #     # deck2 = Deck(title="History")
-    #     # deck3 = Deck(title="Science")
-    #     # session.add_all([deck1, deck2, deck3])
-    #     # session.commit()
-    #     # all_deck_widget = QWidget(self)
-    #     # Create a QListView to display the decks
-
-    #     deck_list_view = QListView(self)
-    #     layout.addWidget(deck_list_view)
-
-    #     model = QStandardItemModel(self)
-    #     deck_list_view.setModel(model)
-
-    #     decks = session.query(Deck).all()
-
-    #     for deck in decks:
-    #         # deck_widget = DeckWidget(deck)
-    #         # deck_widget.show()
-    #         # deck_layout.addWidget(deck_widget)
-
-    #         item = QStandardItem(deck.title)
-    #         model.appendRow(item)
-
-    #     session.close()
-    #     main_widget.setLayout(layout)
-    #     self.setCentralWidget(main_widget)
+    def delete_records(self):
+        """Delete selected decks"""
+        del_rows = self.selection_model.selectedRows()
+        self.model.delete_rows(del_rows)
