@@ -142,6 +142,50 @@ class AlchemicalTableModel(QAbstractTableModel):
             self.dataChanged.emit(index, index)
             return True
 
+    def removeRow(self, row):
+        if 0 <= row < len(self.results):
+            item = self.results[row]
+
+            try:
+                self.session.delete(item)
+                self.session.commit()
+                # self.refresh()
+            except Exception as e:
+                QMessageBox.critical(None, "SQL Delete Error", str(e))
+                return False
+            else:
+                self.beginRemoveRows(QModelIndex(), row, row)
+                del self.results[row]
+                # self.count -= 1
+                self.endRemoveRows()
+                self.refresh()
+
+                return True
+
+        return False
+
+    def removeRows(self, rows):
+        rows.sort(reverse=True)
+
+        for row in rows:
+            if 0 <= row < len(self.results):
+                item = self.results[row]
+
+                try:
+                    self.session.delete(item)
+                    self.session.commit()
+                    del self.results[row]
+                    self.count -= 1
+                except Exception as e:
+                    QMessageBox.critical(None, "SQL Delete Error", str(e))
+                    return False
+
+        self.beginRemoveRows(QModelIndex(), rows[0], rows[-1])
+        self.endRemoveRows()
+        self.refresh()
+
+        return True
+
     def setSorting(self, column, order=Qt.SortOrder.DescendingOrder):
         """Sort table by given column number."""
         self.sort = order, column
