@@ -1,12 +1,11 @@
-from . import Deck
+from . import Flashcard
 from . import get_scoped_session
 
 from . import AlchemizedColumn
 from .alchemical_model import AlchemicalTableModel
-
 from PyQt6.QtCore import (
-    QVariant,
     Qt,
+    QVariant,
 )
 
 import logging
@@ -15,18 +14,23 @@ log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
 
-class DeckTableModel(AlchemicalTableModel):
-    def __init__(self):
+class FlashcardTableModel(AlchemicalTableModel):
+    def __init__(self, deck_id):
+        self.deck_id = deck_id
+
         col_extra_properties = {
-            "title": {"display_name": "Title", "flags": {"editable": True}},
-            "Category_id": {"display_name": "Category", "flags": {}},
+            "question": {"display_name": "Question", "flags": {"editable": True}},
+            "difficulty_level": {
+                "display_name": "Difficulty",
+                "flags": {"editable": True},
+            },
         }
 
         cols = [
             AlchemizedColumn(
                 column=alchemy_col, column_name=alchemy_col.name, flags=dict()
             )
-            for alchemy_col in Deck.__table__.columns
+            for alchemy_col in Flashcard.__table__.columns
         ]
 
         for col in cols:
@@ -35,7 +39,22 @@ class DeckTableModel(AlchemicalTableModel):
                     col.header_display_name = extra_properties.get("display_name", "")
                     col.flags = extra_properties.get("flags", dict())
 
-        super().__init__(Deck, Deck.Flashcards, cols)
+        super().__init__(Flashcard, Flashcard.Deck, cols)
+        # self.setFilter({"Deck_id": self.deck_id})
+
+    def refresh(self):
+        self.layoutAboutToBeChanged.emit()
+        session = get_scoped_session()
+        query = session.query(Flashcard)
+
+        query = query.filter_by(Deck_id=self.deck_id)
+
+        # filter_var = Deck_id = self.deck_id
+
+        # self.fields = self.cols
+
+        super().refresh(query)
+        session.remove()
 
     def data(self, index, role):
         if not index.isValid() or role not in (
@@ -45,10 +64,13 @@ class DeckTableModel(AlchemicalTableModel):
             return QVariant()
         row = self.results[index.row()]
         title = self.fields[index.column()].column_name
+        column = self.fields[index.column()].column
 
-        if title == self.column_name_w_foreign_key:
+        if title == "difficulty_level":
             # Get the category name instead of category_id
-            value = row.Category.name if row.Category else ""
+            value = {0: "easy", 1: "medium", 2: "hard"}.get(
+                int(getattr(row, title)), ""
+            )
         else:
             value = str(getattr(row, title))
 

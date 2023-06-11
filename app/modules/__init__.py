@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from sqlalchemy.sql.schema import Column
 
-from .database_models import *
-
 
 @dataclass
 class AlchemizedColumn:
@@ -12,4 +10,7 @@ class AlchemizedColumn:
     flags: dict = None
 
 
-from .deck_table_model import DeckTableModel
+from .database_models import *
+from .deck_table_model import *
+from .flashcard_table_model import *
+from .deck_widget import *

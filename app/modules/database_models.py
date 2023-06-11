@@ -8,7 +8,7 @@ global dbNames
 
 
 class dbNames:
-    DB_PATH = "sqlite:///app/Flashcard_app.db"
+    DB_PATH = "sqlite:///app/flashcard_app.db"
     Decks = "Decks"
     Flashcards = "Flashcards"
     Categories = "Categories"
@@ -87,7 +87,7 @@ class EngineSingleton:
         return self._engine
 
     def _create_engine(self):
-        engine = create_engine("sqlite:///app/Flashcard_app.db")
+        engine = create_engine(dbNames.DB_PATH, pool_size=20, max_overflow=10)
         self._init_db(engine)
         return engine
 

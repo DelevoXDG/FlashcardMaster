@@ -139,6 +139,9 @@
     <property name="styleSheet">
      <string notr="true"/>
     </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="add_button">
     <property name="geometry">
@@ -198,7 +201,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="create_playlist_button_2">
+   <widget class="QPushButton" name="stats_button">
     <property name="geometry">
      <rect>
       <x>340</x>
