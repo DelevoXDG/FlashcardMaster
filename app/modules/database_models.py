@@ -8,7 +8,7 @@ global dbNames
 
 
 class dbNames:
-    DB_PATH = "sqlite:///app/Flashcard_app.db"
+    DB_PATH = "sqlite:///app/flashcard_app.db"
     Decks = "Decks"
     Flashcards = "Flashcards"
     Categories = "Categories"
@@ -26,9 +26,14 @@ class Deck(Base):
     Category_id = Column(Integer, ForeignKey(f"{dbNames.Categories}.id"))
 
     Flashcards = relationship(
-        dbNames.SingleFlashcard, back_populates=dbNames.SingleDeck
+        dbNames.SingleFlashcard,
+        back_populates=dbNames.SingleDeck,
+        cascade="all, delete-orphan",
     )
-    Category = relationship(dbNames.SingleCategory, back_populates=dbNames.Decks)
+    Category = relationship(
+        dbNames.SingleCategory,
+        back_populates=dbNames.Decks,
+    )
 
     def __repr__(self):
         return f"<Deck(id={self.id}, title='{self.title}')>"
@@ -43,7 +48,10 @@ class Flashcard(Base):
     difficulty_level = Column(Integer)
     Deck_id = Column(Integer, ForeignKey(f"{dbNames.Decks}.id"))
 
-    Deck = relationship(dbNames.SingleDeck, back_populates=dbNames.Flashcards)
+    Deck = relationship(
+        dbNames.SingleDeck,
+        back_populates=dbNames.Flashcards,
+    )
 
     def __repr__(self):
         return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
@@ -87,7 +95,7 @@ class EngineSingleton:
         return self._engine
 
     def _create_engine(self):
-        engine = create_engine("sqlite:///app/Flashcard_app.db")
+        engine = create_engine(dbNames.DB_PATH, pool_size=20, max_overflow=10)
         self._init_db(engine)
         return engine
 
@@ -101,6 +109,13 @@ def get_scoped_session():
     engine = EngineSingleton().engine
     session_factory = sessionmaker(bind=engine)
     Session = scoped_session(session_factory)
+    return Session
+
+
+def get_session():
+    engine = EngineSingleton().engine
+    session_factory = sessionmaker(bind=engine)
+    Session = session_factory()
     return Session
 
 

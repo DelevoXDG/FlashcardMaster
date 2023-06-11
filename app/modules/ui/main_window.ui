@@ -139,6 +139,9 @@
     <property name="styleSheet">
      <string notr="true"/>
     </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="add_button">
     <property name="geometry">
@@ -198,7 +201,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="create_playlist_button_2">
+   <widget class="QPushButton" name="stats_button">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -215,6 +218,31 @@
     </property>
     <property name="text">
      <string>Stats</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="merge_button">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>540</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Delete deck from the collection</string>
+    </property>
+    <property name="text">
+     <string>Merge</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
     </property>
    </widget>
   </widget>

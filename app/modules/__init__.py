@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from sqlalchemy.sql.schema import Column
 
-from .database_models import *
-
 
 @dataclass
 class AlchemizedColumn:
@@ -12,4 +10,9 @@ class AlchemizedColumn:
     flags: dict = None
 
 
+from .difficulty_level import DifficultyLevel
+from .database_models import *
 from .deck_table_model import DeckTableModel
+from .flashcard_table_model import FlashcardTableModel
+from .deck_widget import DeckWidget
+from .playlist_widget import PlaylistWidget
