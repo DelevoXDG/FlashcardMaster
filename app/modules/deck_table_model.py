@@ -1,5 +1,8 @@
 from . import Deck
-from . import get_scoped_session
+from . import (
+    get_scoped_session,
+    get_session,
+)
 
 from . import AlchemizedColumn
 from .alchemical_model import AlchemicalTableModel
@@ -34,7 +37,6 @@ class DeckTableModel(AlchemicalTableModel):
                 if name == col.column_name:
                     col.header_display_name = extra_properties.get("display_name", "")
                     col.flags = extra_properties.get("flags", dict())
-
         super().__init__(Deck, Deck.Flashcards, cols)
 
     def data(self, index, role):

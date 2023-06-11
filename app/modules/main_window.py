@@ -20,7 +20,13 @@ from PyQt6.QtGui import (
     QStandardItem,
 )
 from PyQt6 import uic
-from . import Deck, engine, DeckTableModel, DeckWidget
+from . import (
+    Deck,
+    engine,
+    DeckTableModel,
+    DeckWidget,
+    PlaylistWidget,
+)
 
 from .tests import sample_db_data as dbtest
 
@@ -37,8 +43,9 @@ class MainWindow(QMainWindow):
 
         self.model = DeckTableModel()
         # dbtest.add_sample_decks()
-        # dbtest.add_sample_flashcards()
         # dbtest.add_sample_decks_with_categories()
+        # dbtest.add_sample_flashcards()
+        # dbtest.print_all_flashcards()
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ui_path = os.path.join(current_dir, "ui", "main_window.ui")
@@ -47,6 +54,7 @@ class MainWindow(QMainWindow):
         self.view: QTableView = self.view
         self.add_button: QPushButton = self.add_button
         self.delete_button: QPushButton = self.delete_button
+        self.merge_button: QPushButton = self.merge_button
         self.import_button: QPushButton = self.import_button
         self.export_button: QPushButton = self.export_button
         self.create_playlist_button: QPushButton = self.create_playlist_button
@@ -60,18 +68,22 @@ class MainWindow(QMainWindow):
         # self.view.sortByColumn(0, Qt.SortOrder.AscendingOrder)
 
         self.selection_model = self.view.selectionModel()
+        self.add_button.clicked.connect(self.add_deck)
         self.delete_button.clicked.connect(self.delete_decks)
+        self.merge_button.clicked.connect(self.merge_playlists)
+        self.create_playlist_button.clicked.connect(self.create_playlist)
         self.view.doubleClicked.connect(self.open_deck_widget)
 
         self.delete_button.setEnabled(False)
         self.create_playlist_button.setEnabled(False)
         self.export_button.setEnabled(False)
+        self.merge_button.setEnabled(False)
 
         self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
 
         self.model.refresh()
 
-    def refresh_deck_table(self, deck_row):
+    def refresh_deck_table(self):
         # index = self.model.index(deck_row.row(), 1)
         # self.model.dataChanged.emit(index, index)
         # self.model.refresh()
@@ -87,14 +99,14 @@ class MainWindow(QMainWindow):
     #     self.model.sort(col, order)
 
     def open_deck_widget(self):
-        selected_rows = self.selection_model.selectedRows()
+        selected_deck_rows = self.selection_model.selectedRows()
 
-        if not selected_rows:
+        if not selected_deck_rows:
             return
-        if len(selected_rows) != 1:
+        if len(selected_deck_rows) != 1:
             return
 
-        clicked_row = selected_rows[0]
+        clicked_row = selected_deck_rows[0]
 
         selected_deck = self.model.results[clicked_row.row()]
 
@@ -112,12 +124,50 @@ class MainWindow(QMainWindow):
         """Toggle button enabled state based on selection"""
         self.delete_button.setEnabled(self.selection_model.hasSelection())
         self.create_playlist_button.setEnabled(self.selection_model.hasSelection())
+        self.merge_button.setEnabled(
+            self.selection_model.hasSelection()
+            and len(self.selection_model.selectedRows()) >= 2
+        )
         self.export_button.setEnabled(
             self.selection_model.hasSelection()
             and len(self.selection_model.selectedRows()) == 1
         )
 
+    def add_deck(self):
+        session = self.model.session
+        new_deck = Deck()
+        session.add(new_deck)
+        session.commit()
+        new_deck.title = f"Deck #{new_deck.id}"
+        session.commit()
+        self.refresh_deck_table()
+        deck_widget = DeckWidget(new_deck.id, parent=self)
+        deck_widget.show()
+
+    def handle_deck_added(self, deck):
+        new_deck = Deck(
+            title=deck.title
+        )  # Assuming the title is provided in the deck widget
+
     def delete_decks(self):
         del_rows = self.selection_model.selectedRows()
         self.model._delete_rows(del_rows)
         dbtest.print_all_flashcards()
+
+    def merge_playlists(self):
+        # TODO: Implement
+        selected_deck_rows = self.selection_model.selectedRows()
+        raise NotImplementedError
+
+        pass
+
+    def create_playlist(self):
+        # TODO: Implement
+        selected_deck_rows = self.selection_model.selectedRows()
+        raise NotImplementedError
+
+        decks = None
+
+        if not selected_deck_rows:
+            return
+        playlist_widget = PlaylistWidget(decks, parent=self)

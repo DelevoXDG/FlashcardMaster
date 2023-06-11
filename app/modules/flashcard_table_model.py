@@ -1,7 +1,14 @@
-from . import Flashcard
-from . import get_scoped_session
+from . import (
+    get_scoped_session,
+    get_session,
+)
+from . import (
+    AlchemizedColumn,
+    Flashcard,
+)
+from . import DifficultyLevel
 
-from . import AlchemizedColumn
+
 from .alchemical_model import AlchemicalTableModel
 from PyQt6.QtCore import (
     Qt,
@@ -20,9 +27,10 @@ class FlashcardTableModel(AlchemicalTableModel):
 
         col_extra_properties = {
             "question": {"display_name": "Question", "flags": {"editable": True}},
+            "answer": {"display_name": "Answer", "flags": {"editable": False}},
             "difficulty_level": {
                 "display_name": "Difficulty",
-                "flags": {"editable": True},
+                "flags": {"editable": False},
             },
         }
 
@@ -44,17 +52,19 @@ class FlashcardTableModel(AlchemicalTableModel):
 
     def refresh(self):
         self.layoutAboutToBeChanged.emit()
-        session = get_scoped_session()
+        session = self.session
         query = session.query(Flashcard)
 
         query = query.filter_by(Deck_id=self.deck_id)
+        self.query = query
 
         # filter_var = Deck_id = self.deck_id
 
         # self.fields = self.cols
 
-        super().refresh(query)
-        session.remove()
+        super().refresh()
+        # super().refresh(query)
+        # session.remove()
 
     def data(self, index, role):
         if not index.isValid() or role not in (
@@ -67,10 +77,9 @@ class FlashcardTableModel(AlchemicalTableModel):
         column = self.fields[index.column()].column
 
         if title == "difficulty_level":
+            diff_num = int(getattr(row, title))
             # Get the category name instead of category_id
-            value = {0: "easy", 1: "medium", 2: "hard"}.get(
-                int(getattr(row, title)), ""
-            )
+            value = DifficultyLevel.get_name(diff_num)
         else:
             value = str(getattr(row, title))
 

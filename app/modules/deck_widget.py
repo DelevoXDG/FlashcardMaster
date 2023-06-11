@@ -33,13 +33,14 @@ class DeckWidget(QWidget):
     def __init__(
         self,
         deck_id,
-        deck_row,
+        deck_row=None,
         parent=None,
     ):
         super().__init__(parent)
         session = get_scoped_session()
         self.deck = session.query(Deck).filter_by(id=deck_id).first()
         self.deck_row = deck_row
+        session.remove()
 
         self.setWindowFlag(Qt.WindowType.Window)
         self.model = FlashcardTableModel(deck_id)
@@ -70,7 +71,6 @@ class DeckWidget(QWidget):
 
         self.selection_model = self.view.selectionModel()
 
-        session.remove()
         self.model.refresh()
 
         columns_to_hide = set(["Deck_id"])
@@ -107,7 +107,11 @@ class DeckWidget(QWidget):
             return
 
         try:
-            session = get_scoped_session()
+            if self.parent() is not None:
+                session = self.parent().model.session
+            else:
+                session = get_scoped_session()
+
             self.deck = session.query(Deck).filter_by(id=self.deck.id).first()
             self.deck.title = new_name
             # session.query(Deck).filter_by(id=self.deck.id).update(
@@ -116,12 +120,12 @@ class DeckWidget(QWidget):
             session.commit()
             # session.refresh(self.deck)
             # session.flush()
-            session.remove()
+            # session.remove()
         except Exception as e:
             log.error(f"Failed to save deck name: {str(e)}")
         else:
             if self.parent() is not None:
-                self.parent().refresh_deck_table(self.deck_row)
+                self.parent().refresh_deck_table()
             # Update the deck's title in the window
             self.set_window_title(self.deck.title)
             log.info("Deck name saved successfully")

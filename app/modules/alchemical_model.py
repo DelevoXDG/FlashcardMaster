@@ -8,6 +8,7 @@ from PyQt6.QtCore import (
 from sqlalchemy.orm import joinedload
 from . import (
     get_scoped_session,
+    get_session,
 )
 import logging
 from modules import AlchemizedColumn
@@ -24,12 +25,12 @@ class AlchemicalTableModel(QAbstractTableModel):
     def __init__(self, db_object_model, relationship, columns):
         super().__init__()
         # TODO: session and model might not be needed if just an instance of 'DBInteractions' is passed
-        # self.session = session()
+        # self.session = session
         self.relationship = relationship
         self.db_object_model = db_object_model
 
-        session = get_scoped_session()
-        self.query = session.query(db_object_model)
+        self._session = get_session()
+        self.query = self._session.query(db_object_model)
 
         log.debug(f"Passed columns: {columns}")
         self.fields: list[AlchemizedColumn] = columns
@@ -45,12 +46,12 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.column_name_w_foreign_key = (
             AlchemicalTableModel.get_column_name_w_foreign_key(db_object_model)
         )
-        session.remove()
+        # session.remove()
         self.refresh()
 
-    # @property
-    # def session(self):
-    #     return get_scoped_session()
+    @property
+    def session(self):
+        return self._session
 
     # @property
     # def query(self):
@@ -104,11 +105,13 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.refresh()
 
     def refresh(self, query=None):
-        if query is not None:
-            self.query = query
-        else:
-            session = get_scoped_session()
-            self.query = session.query(self.db_object_model)
+        # if query is not None:
+        # self.query = query
+        # else:
+        # session = get_scoped_session()
+        # session = self.session
+        # self.query = session.query(self.db_object_model)
+        session = self.session
 
         """Recalculates self.results and self.count"""
         log.info("Refreshing the table")
@@ -192,7 +195,8 @@ class AlchemicalTableModel(QAbstractTableModel):
         return QVariant(value)
 
     def setData(self, index, value, role=None) -> bool:
-        session = get_scoped_session()
+        session = self.session
+        # session = get_scoped_session()
 
         row = self.results[index.row()]
         name = self.fields[index.column()].column_name
@@ -202,31 +206,32 @@ class AlchemicalTableModel(QAbstractTableModel):
             session.commit()
         except Exception as e:
             QMessageBox.critical(None, "SQL Input Error", str(e))
-            session.remove()
+            # session.remove()
             return False
         else:
             self.dataChanged.emit(index, index)
-            session.remove()
+            # session.remove()
             return True
 
     def removeRow(self, row):
         if 0 <= row < len(self.results):
             item = self.results[row]
-            session = get_scoped_session()
+            # session = get_scoped_session()
+            session = self.session
             try:
                 session.delete(item)
                 session.commit()
                 # self.refresh()
             except Exception as e:
                 QMessageBox.critical(None, "SQL Delete Error", str(e))
-                session.remove()
+                # session.remove()
                 return False
             else:
                 self.beginRemoveRows(QModelIndex(), row, row)
                 del self.results[row]
                 self.count -= 1
                 self.endRemoveRows()
-                session.remove()
+                # session.remove()
                 self.refresh()
 
                 return True
@@ -240,7 +245,8 @@ class AlchemicalTableModel(QAbstractTableModel):
             if 0 <= row < len(self.results):
                 item = self.results[row]
                 try:
-                    session = get_scoped_session()
+                    session = self.session
+                    # session = get_scoped_session()
                     session.delete(item)
                     session.commit()
                     del self.results[row]

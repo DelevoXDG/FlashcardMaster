@@ -17,7 +17,17 @@ def print_all_flashcards():
     flashcards = session.query(Flashcard).all()
 
     for flashcard in flashcards:
-        log.debug(flashcard)
+        print(flashcard)
+        # log.debug(flashcard)
+
+    session.remove()
+
+
+def delete_flashcards_with_invalid_difficulty():
+    session = get_scoped_session()
+    flashcard = session.query(Flashcard).filter_by(difficulty_level="medium").first()
+    session.delete(flashcard)
+    session.commit()
 
     session.remove()
 
@@ -30,7 +40,7 @@ def add_sample_decks():
     deck3 = Deck(title="Science")
     session.add_all([deck1, deck2, deck3])
     session.commit()
-    session.remove()
+    # session.remove()
 
 
 def add_sample_decks_with_categories():
@@ -52,7 +62,7 @@ def add_sample_decks_with_categories():
 
     session.add_all([deck1, deck2, deck3])
     session.commit()
-    session.remove()
+    # session.remove()
 
 
 def add_sample_flashcards():
@@ -101,7 +111,7 @@ def add_sample_flashcards():
         card_type=1,
         question="In which year did World War II end?",
         answer="1945",
-        difficulty_level=3,
+        difficulty_level=0,
         Deck=history_deck,
     )
     flashcard6 = Flashcard(
@@ -115,4 +125,4 @@ def add_sample_flashcards():
     session.add_all([flashcard4, flashcard5, flashcard6])
 
     session.commit()
-    session.remove()
+    # session.remove()

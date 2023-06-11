@@ -10,7 +10,9 @@ class AlchemizedColumn:
     flags: dict = None
 
 
+from .difficulty_level import DifficultyLevel
 from .database_models import *
-from .deck_table_model import *
-from .flashcard_table_model import *
-from .deck_widget import *
+from .deck_table_model import DeckTableModel
+from .flashcard_table_model import FlashcardTableModel
+from .deck_widget import DeckWidget
+from .playlist_widget import PlaylistWidget
