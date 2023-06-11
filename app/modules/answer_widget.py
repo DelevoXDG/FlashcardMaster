@@ -1,10 +1,16 @@
-from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QListView, QLabel, QPushButton
+from PyQt6.QtWidgets import (
+    QWidget,  
+    QLabel,  
+    QVBoxLayout,
+    QApplication
+)
 import json
 
 class AnswerWidget(QWidget):
-    def __init__(self, answer):
-        super().__init__()
+    def __init__(self, answer, parent=None):
+        super().__init__(parent=parent)
         self.answer = answer
+        self.setup_ui()
 
     def setup_ui(self):
         pass
@@ -13,13 +19,12 @@ class AnswerWidget(QWidget):
         pass
 
 class TextAnswerWidget(AnswerWidget):
-    def __init__(self, answer):
-        super().__init__(answer=answer)
+    def __init__(self, answer, parent=None):
+        super().__init__(answer=answer, parent=parent)
     
     def setup_ui(self):
         layout = QVBoxLayout()
 
-        # Dodajemy etykietę dla odpowiedzi
         self.answer_label = QLabel(self.answer)
         self.answer_label.hide()
         layout.addWidget(self.answer_label)
@@ -30,8 +35,8 @@ class TextAnswerWidget(AnswerWidget):
         self.answer_label.setVisible(not self.answer_label.isVisible())
 
 class TrueFalseAnswerWidget(AnswerWidget):
-    def __init__(self, answer):
-        super().__init__(answer=answer)
+    def __init__(self, answer, parent=None):
+        super().__init__(answer=answer, parent=parent)
     
     def setup_ui(self):
         layout = QVBoxLayout()
@@ -51,8 +56,8 @@ class TrueFalseAnswerWidget(AnswerWidget):
             self.answer_false_label.setVisible(not self.answer_false_label.isVisible())
 
 class MultipleChoiceAnswer(AnswerWidget):
-    def __init__(self, answer):
-        super().__init__(answer=answer)
+    def __init__(self, answer, parent=None):
+        super().__init__(answer=answer, parent=parent)
     
     def setup_ui(self):
         layout = QVBoxLayout()
@@ -71,4 +76,13 @@ class MultipleChoiceAnswer(AnswerWidget):
         for label in self.possible_answer_labels:
             if self.possibleAnswers[label.text()] == 0:
                 label.setVisible(not label.isVisible())
-    
+
+#Do testów
+if __name__ == "__main__":
+    import sys
+    app = QApplication(sys.argv)
+    # widget = TextAnswerWidget("text")
+    # widget = TrueFalseAnswerWidget("0")
+    widget = MultipleChoiceAnswer('{"name":0, "age":0, "car":1}')
+    widget.show()
+    sys.exit(app.exec())
