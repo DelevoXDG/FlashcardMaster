@@ -2,8 +2,10 @@ from PyQt6.QtWidgets import (
     QWidget,  
     QLabel,  
     QVBoxLayout,
-    QApplication
+    QApplication,
+    QSizePolicy
 )
+from PyQt6.QtCore import Qt
 import json
 
 class AnswerWidget(QWidget):
@@ -25,14 +27,16 @@ class TextAnswerWidget(AnswerWidget):
     def setup_ui(self):
         layout = QVBoxLayout()
 
-        self.answer_label = QLabel(self.answer)
-        self.answer_label.hide()
-        layout.addWidget(self.answer_label)
+        self.text_answer_label = QLabel("-")
+        layout.addWidget(self.text_answer_label)
 
         self.setLayout(layout)
     
     def flip(self):
-        self.answer_label.setVisible(not self.answer_label.isVisible())
+        if self.text_answer_label.text() == "-":
+            self.text_answer_label.setText(self.answer)
+        else:
+            self.text_answer_label.setText("-")
 
 class TrueFalseAnswerWidget(AnswerWidget):
     def __init__(self, answer, parent=None):
@@ -81,8 +85,8 @@ class MultipleChoiceAnswer(AnswerWidget):
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
-    # widget = TextAnswerWidget("text")
+    widget = TextAnswerWidget("text")
     # widget = TrueFalseAnswerWidget("0")
-    widget = MultipleChoiceAnswer('{"name":0, "age":0, "car":1}')
+    # widget = MultipleChoiceAnswer('{"name":0, "age":0, "car":1}')
     widget.show()
     sys.exit(app.exec())

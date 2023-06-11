@@ -51,13 +51,13 @@ if __name__ == "__main__":
     true_false_flashcard = Flashcard("pytanie true false", "0", 1)
     multiple_choice_flashcard = Flashcard("pytanie multiple choice", '{"name":0, "age":0, "car":1}', 2)
     
-    # factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(text_flashcard)
+    factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(text_flashcard)
     # factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(true_false_flashcard)
-    factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(multiple_choice_flashcard)
+    # factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(multiple_choice_flashcard)
 
-    # widget = factory.create(text_flashcard)
+    widget = factory.create(text_flashcard)
     # widget = factory.create(true_false_flashcard)
-    widget = factory.create(multiple_choice_flashcard)
-    
+    # widget = factory.create(multiple_choice_flashcard)
+
     widget.show()
     sys.exit(app.exec())
