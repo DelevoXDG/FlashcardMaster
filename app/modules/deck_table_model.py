@@ -23,6 +23,7 @@ class DeckTableModel(AlchemicalTableModel):
         col_extra_properties = {
             "title": {"display_name": "Title", "flags": {"editable": True}},
             "Category_id": {"display_name": "Category", "flags": {}},
+            "id": {"display_name": "#", "flags": {"editable": False}},
         }
 
         cols = [

@@ -32,6 +32,7 @@ class FlashcardTableModel(AlchemicalTableModel):
                 "display_name": "Difficulty",
                 "flags": {"editable": False},
             },
+            "id": {"display_name": "#", "flags": {"editable": False}},
         }
 
         cols = [
