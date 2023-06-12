@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QVBoxLayout,
+    QLabel
 )
 from PyQt6.uic import loadUi
 from answer_widget_factory import AnswerWidgetFactory
@@ -25,6 +26,10 @@ class FlashcardWidget(QWidget):
         answer_widget_factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(
             self.flashcard
         )
+
+        question_label: QLabel = self.question_label
+        question_label.setText(self.flashcard.question)
+
         answer_widget = answer_widget_factory.create(self.flashcard, parent=self)
         # answer_widget.setParent(self.answer_widget)
 

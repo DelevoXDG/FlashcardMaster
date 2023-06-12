@@ -1,7 +1,7 @@
 from collections import deque
 
-from . import (
-    get_scoped_session,
+from database_models import (
+    get_scoped_session
 )
 
 class Playlist():
@@ -9,7 +9,7 @@ class Playlist():
         self.flashcards = deque()
         session = get_scoped_session()
         # get Flashcard sqlalchemy ojbects from db 
-        self.cur_card
+        #self.cur_card
     
     def next(self):
         self.cur_card = self.flashcards.popleft() 
