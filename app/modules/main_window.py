@@ -22,6 +22,7 @@ from PyQt6.QtGui import (
 from PyQt6 import uic
 from . import (
     Deck,
+    Flashcard,
     engine,
     DeckTableModel,
     DeckWidget,
@@ -78,6 +79,7 @@ class MainWindow(QMainWindow):
         self.create_playlist_button.setEnabled(False)
         self.export_button.setEnabled(False)
         self.merge_button.setEnabled(False)
+        self.stats_button.setEnabled(False)
 
         self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
 
@@ -155,11 +157,38 @@ class MainWindow(QMainWindow):
         dbtest.print_all_flashcards()
 
     def merge_playlists(self):
-        # TODO: Implement
         selected_deck_rows = self.selection_model.selectedRows()
-        raise NotImplementedError
 
-        pass
+        if not selected_deck_rows or len(selected_deck_rows) < 2:
+            return
+
+        selected_deck_ids = [
+            self.model.results[row.row()].id for row in selected_deck_rows
+        ]
+
+        session = self.model.session
+        new_deck = Deck()
+        session.add(new_deck)
+        session.commit()
+        new_deck.title = f"Deck #{new_deck.id}"
+        session.commit()
+
+        flashcards_to_update = (
+            session.query(Flashcard)
+            .filter(Flashcard.Deck_id.in_(selected_deck_ids))
+            .all()
+        )
+        for flashcard in flashcards_to_update:
+            flashcard.Deck_id = new_deck.id
+        session.commit()
+
+        for deck_id in selected_deck_ids:
+            deck = session.query(Deck).filter_by(id=deck_id).first()
+            if deck:
+                session.delete(deck)
+        session.commit()
+
+        self.refresh_deck_table()
 
     def create_playlist(self):
         # TODO: Implement
