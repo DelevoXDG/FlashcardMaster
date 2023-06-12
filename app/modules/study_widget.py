@@ -40,12 +40,17 @@ class StudyWidget(QWidget):
         self.load_next_flashcard()
 
     def show_buttons(self):
-        self.correct_button.show()
-        self.wrong_button.show()
+        # self.correct_button.show()
+        # self.wrong_button.show()
+        self.correct_button.setEnabled(True)
+        self.wrong_button.setEnabled(True)
 
     def load_next_flashcard(self):
-        self.correct_button.hide()
-        self.wrong_button.hide()
+        # self.correct_button.hide()
+        # self.wrong_button.hide()
+        self.correct_button.setEnabled(False)
+        self.wrong_button.setEnabled(False)
+
         if self.playlist.has_next():
             flashcard = self.playlist.next()
             flashcard_widget = FlashcardWidget(flashcard)
@@ -109,9 +114,9 @@ if __name__ == "__main__":
     multiple_choice_flashcard.card_type = 2
     multiple_choice_flashcard.question = "pytanie multiple choice"
 
-    playlist.flashcards.append(text_flashcard)
-    playlist.flashcards.append(true_false_flashcard)
-    playlist.flashcards.append(multiple_choice_flashcard)
+    playlist.flashcard_ids.append(text_flashcard)
+    playlist.flashcard_ids.append(true_false_flashcard)
+    playlist.flashcard_ids.append(multiple_choice_flashcard)
 
     widget = StudyWidget(playlist)
     widget.show()
