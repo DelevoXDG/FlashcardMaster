@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import os
 from sqlalchemy.sql.schema import Column
 
 
@@ -16,3 +17,8 @@ from .deck_table_model import DeckTableModel
 from .flashcard_table_model import FlashcardTableModel
 from .deck_widget import DeckWidget
 from .playlist_widget import PlaylistWidget
+
+
+def full_path(relative_path):
+    cur_dir = os.path.dirname(os.path.realpath(__file__))
+    return cur_dir + os.path.sep + relative_path

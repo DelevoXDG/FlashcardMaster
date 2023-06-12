@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QVBoxLayout,
-    QLabel
+    QLabel,
 )
 from PyQt6.uic import loadUi
 from answer_widget_factory import AnswerWidgetFactory
@@ -27,19 +27,25 @@ class FlashcardWidget(QWidget):
             self.flashcard
         )
 
-        question_label: QLabel = self.question_label
-        question_label.setText(self.flashcard.question)
+        self.layout: QVBoxLayout = self.layout
+        self.question_label: QLabel = self.question_label
+        self.answer_widget: QWidget = self.answer_widget
+        # self.question_label: QLabel = self.frame_1.question_label
+        # self.answer_widget: QWidget = self.frame_2.answer_widget
+
+        self.question_label.setText(self.flashcard.question)
 
         answer_widget = answer_widget_factory.create(self.flashcard, parent=self)
         # answer_widget.setParent(self.answer_widget)
 
         placeholder: QWidget = self.answer_widget
-        layout: QVBoxLayout = self.layout
-        layout.replaceWidget(placeholder, answer_widget)
+        self.layout.replaceWidget(placeholder, answer_widget)
+        self.answer_widget = answer_widget
 
-        # self.answer_widget = answer_widget
-        self.flip_button.clicked.connect(answer_widget.flip)
         # TrueFalseAnswerWidget("0", self.answer_widget)
+        # self.answer_widget = answer_widget
+
+        # self.flip_button.clicked.connect(answer_widget.flip)
 
 
 # Do testów

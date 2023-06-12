@@ -27,6 +27,8 @@ class TextAnswerWidget(AnswerWidget):
         layout = QVBoxLayout()
 
         self.text_answer_label = QLabel(self.hidden_answer_text)
+        self.text_answer_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.text_answer_label.setAlignment(Qt.AlignmentFlag.AlignTop)
         layout.addWidget(self.text_answer_label)
 
         self.setLayout(layout)

@@ -11,32 +11,52 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Study Mode</string>
   </property>
   <widget class="QPushButton" name="correct_button">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>370</y>
-     <width>131</width>
-     <height>51</height>
+     <x>300</x>
+     <y>380</y>
+     <width>41</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Correct</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/correct.png</normaloff>../../assets/correct.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="wrong_button">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>370</y>
-     <width>131</width>
-     <height>51</height>
+     <x>350</x>
+     <y>380</y>
+     <width>41</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Wrong</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/incorrect.png</normaloff>../../assets/incorrect.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
    </property>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -52,7 +72,49 @@
     <item>
      <widget class="QWidget" name="flashcard_widget" native="true"/>
     </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="flip_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>380</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/visible.png</normaloff>../../assets/visible.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
   </widget>
  </widget>
  <resources/>
