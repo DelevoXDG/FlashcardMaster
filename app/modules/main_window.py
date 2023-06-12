@@ -79,6 +79,7 @@ class MainWindow(QMainWindow):
         self.create_playlist_button.setEnabled(False)
         self.export_button.setEnabled(False)
         self.merge_button.setEnabled(False)
+        self.stats_button.setEnabled(False)
 
         self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
 
@@ -161,7 +162,9 @@ class MainWindow(QMainWindow):
         if not selected_deck_rows or len(selected_deck_rows) < 2:
             return
 
-        selected_deck_ids = [self.model.results[row.row()].id for row in selected_deck_rows]
+        selected_deck_ids = [
+            self.model.results[row.row()].id for row in selected_deck_rows
+        ]
 
         session = self.model.session
         new_deck = Deck()
@@ -170,7 +173,11 @@ class MainWindow(QMainWindow):
         new_deck.title = f"Deck #{new_deck.id}"
         session.commit()
 
-        flashcards_to_update = session.query(Flashcard).filter(Flashcard.Deck_id.in_(selected_deck_ids)).all()
+        flashcards_to_update = (
+            session.query(Flashcard)
+            .filter(Flashcard.Deck_id.in_(selected_deck_ids))
+            .all()
+        )
         for flashcard in flashcards_to_update:
             flashcard.Deck_id = new_deck.id
         session.commit()
