@@ -22,7 +22,6 @@ class StudyWidget(QWidget):
         super().__init__(parent)
         self.playlist: Playlist = playlist
         self.load_ui()
-        self.flipped = False
 
     def load_ui(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -37,6 +36,9 @@ class StudyWidget(QWidget):
         self.correct_button.clicked.connect(self.correct_button_action)
         self.wrong_button.clicked.connect(self.wrong_button_action)
 
+        self.flip_button.clicked.connect(self.show_buttons)
+        self.flip_button.clicked.connect(self.flip)
+
         self.load_next_flashcard()
 
     def show_buttons(self):
@@ -50,14 +52,14 @@ class StudyWidget(QWidget):
         # self.wrong_button.hide()
         self.correct_button.setEnabled(False)
         self.wrong_button.setEnabled(False)
+        self.flipped = False
+        self.reset_flip_button_icon()
 
         if self.playlist.has_next():
             flashcard = self.playlist.next()
             flashcard_widget = FlashcardWidget(flashcard)
             # flip_button: QPushButton = flashcard_widget.flip_button
             # flip_button.clicked.connect(self.show_buttons)
-            self.flip_button.clicked.connect(self.show_buttons)
-            self.flip_button.clicked.connect(self.flip)
 
             layout: QVBoxLayout = self.layout
             placeholder: QWidget = self.flashcard_widget
@@ -91,6 +93,12 @@ class StudyWidget(QWidget):
     def wrong_button_action(self):
         self.playlist.handle_cur(False)
         self.load_next_flashcard()
+
+    def reset_flip_button_icon(self):
+        upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        flip_icon_path = os.path.join(upper_dir, "assets", "visible.png")
+        self.flip_button.setIcon(QIcon(flip_icon_path))
+
 
 
 if __name__ == "__main__":
