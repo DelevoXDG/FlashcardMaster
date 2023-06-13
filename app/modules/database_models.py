@@ -1,14 +1,16 @@
 from sqlalchemy import create_engine, inspect, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base, scoped_session
 from sqlalchemy import create_engine
-
+import os
 Base = declarative_base()
 
 global dbNames
 
 
 class dbNames:
-    DB_PATH = "sqlite:///app/flashcard_app.db"
+    # DB_PATH = "sqlite:///app/flashcard_app.db"
+    upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    DB_PATH = "sqlite:///"+os.path.join(upper_dir,"flashcard_app.db")
     Decks = "Decks"
     Flashcards = "Flashcards"
     Categories = "Categories"
