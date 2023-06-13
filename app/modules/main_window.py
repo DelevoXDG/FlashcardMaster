@@ -162,12 +162,18 @@ class MainWindow(QMainWindow):
         if not selected_deck_rows or len(selected_deck_rows) < 2:
             return
 
-        selected_deck_ids = [
-            self.model.results[row.row()].id for row in selected_deck_rows
-        ]
+        selected_decks = [self.model.results[row.row()] for row in selected_deck_rows]
+
+        categories = {deck.Category_id for deck in selected_decks}
+        if len(categories) > 1:
+            QMessageBox.critical(self, "Merge error", "Selected decks must have the same category")
+            return
+
+        selected_deck_ids = [deck.id for deck in selected_decks]
 
         session = self.model.session
         new_deck = Deck()
+        new_deck.Category_id = categories.pop()
         session.add(new_deck)
         session.commit()
         new_deck.title = f"Deck #{new_deck.id}"
