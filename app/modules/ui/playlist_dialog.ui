@@ -68,11 +68,6 @@ font-size: 14px;
           </item>
           <item>
            <property name="text">
-            <string>Medium</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
             <string>Hard</string>
            </property>
           </item>

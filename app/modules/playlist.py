@@ -12,7 +12,6 @@ class Playlist:
     # Define difficulty levels
     difficulties = {
         "Easy": [0, 1, 2],
-        "Medium": [1, 0, 2],
         "Hard": [2, 1, 0],
     }
 
@@ -29,7 +28,6 @@ class Playlist:
         if difficulty in self.difficulties:
             order = self.difficulties[difficulty]
             flashcards.sort(key=lambda x: order.index(x.difficulty_level))
-        # flashcards.sort(key=lambda x: x.difficulty_level)
 
         self.flashcard_queue.extend(flashcards)
         self.cur_card = None
