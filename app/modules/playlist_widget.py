@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QLineEdit,
     QComboBox,
-    QDialog
+    QDialog,
 )
 
 from PyQt6 import uic
@@ -20,10 +20,12 @@ from . import (
     Deck,
     Flashcard,
     FlashcardTableModel,
+    StudyWidget,
     get_scoped_session,
 )
 
 from .playlist import Playlist
+
 
 class PlaylistWidget(QDialog):
     def __init__(self, deck_ids, parent=None):
@@ -55,4 +57,7 @@ class PlaylistWidget(QDialog):
         difficulty = self.get_selected_difficulty()
         study_type = self.get_selected_study_type()
         playlist = Playlist(self.deck_ids, difficulty, study_type)
-        # Dalej połączmy ze study_widget
+
+        self.study_widget = StudyWidget(playlist, self.parent())
+        self.study_widget.show()
+        self.close()

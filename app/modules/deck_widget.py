@@ -37,12 +37,13 @@ class DeckWidget(QWidget):
         parent=None,
     ):
         super().__init__(parent)
+        self.setWindowFlag(Qt.WindowType.Window)
+
         session = get_scoped_session()
         self.deck = session.query(Deck).filter_by(id=deck_id).first()
         self.deck_row = deck_row
         session.remove()
 
-        self.setWindowFlag(Qt.WindowType.Window)
         self.model = FlashcardTableModel(deck_id)
         self.set_window_title(self.deck.title)
 

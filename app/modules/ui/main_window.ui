@@ -34,11 +34,13 @@
     <height>610</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>13</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Flashcard Master</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">font-family: Noto Sans SC;</string>
   </property>
   <property name="documentMode">
    <bool>true</bool>
@@ -157,6 +159,11 @@
       <width>400</width>
       <height>470</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
