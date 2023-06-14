@@ -38,7 +38,7 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="toolTip">
-    <string>Add flashcard to the deck</string>
+    <string>Add deck of flashcards</string>
    </property>
    <property name="text">
     <string/>
@@ -67,7 +67,7 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="toolTip">
-    <string>Delete flashcard from the deck</string>
+    <string>Delete deck from the collection</string>
    </property>
    <property name="text">
     <string/>
@@ -94,14 +94,12 @@
    </property>
    <property name="font">
     <font>
-     <family>Noto Sans SC</family>
-     <pointsize>-1</pointsize>
+     <pointsize>13</pointsize>
     </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QLineEdit {
 padding-left: 8px;
-font-size: 16px;
 }</string>
    </property>
    <property name="placeholderText">
@@ -117,13 +115,14 @@ font-size: 16px;
      <height>40</height>
     </rect>
    </property>
-   <property name="toolTip">
-    <string>Select category</string>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QComboBox {
 padding-left: 8px;
-font-size: 16px;
 }</string>
    </property>
    <property name="placeholderText">
@@ -153,9 +152,6 @@ font-size: 16px;
      <width>40</width>
      <height>40</height>
     </rect>
-   </property>
-   <property name="toolTip">
-    <string>Save changes</string>
    </property>
    <property name="text">
     <string/>

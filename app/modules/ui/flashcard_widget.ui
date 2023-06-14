@@ -38,9 +38,9 @@
     <item>
      <widget class="QLabel" name="question_label">
       <property name="font">
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font-size: 16px;</string>
+       <font>
+        <pointsize>16</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Wordmark</string>
@@ -70,14 +70,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="answer_widget" native="true">
-      <property name="font">
-       <font>
-        <family>Noto Sans SC</family>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-     </widget>
+     <widget class="QWidget" name="answer_widget" native="true"/>
     </item>
    </layout>
   </widget>
