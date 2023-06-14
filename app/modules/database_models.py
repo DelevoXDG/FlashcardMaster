@@ -56,11 +56,11 @@ class Flashcard(Base):
         back_populates=dbNames.Flashcards,
     )
     # TODO Add relationship to FlashcardAnswer
-    # FlashcardsAnswers = relationship(
-    #     dbNames.SingleFlashcardAnswer,
-    #     back_populates=dbNames.SingleFlashcard,
-    #     cascade="all, delete-orphan",
-    # )
+    FlashcardAnswers = relationship(
+        dbNames.SingleFlashcardAnswer,
+        back_populates=dbNames.SingleFlashcard,
+        cascade="all, delete-orphan",
+    )
 
     def __repr__(self):
         return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
@@ -83,7 +83,10 @@ class FlashcardAnswer(Base):
     is_correct = Column(Integer)
 
     # TODO Add relationship to Flashcard
-    Flashcard = relationship("Flashcard")
+    Flashcard = relationship(
+        dbNames.SingleFlashcard,
+        back_populates=dbNames.FlashcardAnswers,
+    )
 
     def __repr__(self):
         return f"<FlashcardAnswer(id={self.id}, Flashcard_id={self.Flashcard_id}, is_correct={self.is_correct})>"
