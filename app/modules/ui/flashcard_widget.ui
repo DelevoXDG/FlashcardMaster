@@ -38,10 +38,6 @@
     <item>
      <widget class="QLabel" name="question_label">
       <property name="font">
-       <font>
-        <family>Noto Sans SC</family>
-        <pointsize>-1</pointsize>
-       </font>
       </property>
       <property name="styleSheet">
        <string notr="true">font-size: 16px;</string>

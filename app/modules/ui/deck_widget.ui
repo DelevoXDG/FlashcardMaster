@@ -95,7 +95,6 @@
    <property name="font">
     <font>
      <family>Noto Sans SC</family>
-     <pointsize>-1</pointsize>
     </font>
    </property>
    <property name="styleSheet">
