@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, inspect, Column, Integer, String, ForeignK
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base, scoped_session
 from sqlalchemy import create_engine
 import os
+
 Base = declarative_base()
 
 global dbNames
@@ -10,7 +11,7 @@ global dbNames
 class dbNames:
     # DB_PATH = "sqlite:///app/flashcard_app.db"
     upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    DB_PATH = "sqlite:///"+os.path.join(upper_dir,"flashcard_app.db")
+    DB_PATH = "sqlite:///" + os.path.join(upper_dir, "flashcard_app.db")
     Decks = "Decks"
     Flashcards = "Flashcards"
     Categories = "Categories"
@@ -41,7 +42,7 @@ class Deck(Base):
         return f"<Deck(id={self.id}, title='{self.title}')>"
 
     def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Flashcard(Base):
@@ -62,7 +63,8 @@ class Flashcard(Base):
         return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
 
     def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 class Category(Base):
     __tablename__ = dbNames.Categories
