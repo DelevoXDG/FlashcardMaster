@@ -45,6 +45,8 @@ class Playlist:
         return len(self) > 0
 
     def handle_cur(self, is_correct):
+        # TODO add entry to flashcard answers
+
         if self.cur_card is None:
             return
         if not is_correct:
