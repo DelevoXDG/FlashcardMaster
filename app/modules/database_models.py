@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, inspect, Column, Integer, String, ForeignK
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base, scoped_session
 from sqlalchemy import create_engine
 import os
+
 Base = declarative_base()
 
 global dbNames
@@ -10,7 +11,7 @@ global dbNames
 class dbNames:
     # DB_PATH = "sqlite:///app/flashcard_app.db"
     upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    DB_PATH = "sqlite:///"+os.path.join(upper_dir,"flashcard_app.db")
+    DB_PATH = "sqlite:///" + os.path.join(upper_dir, "flashcard_app.db")
     Decks = "Decks"
     Flashcards = "Flashcards"
     Categories = "Categories"
@@ -54,6 +55,12 @@ class Flashcard(Base):
         dbNames.SingleDeck,
         back_populates=dbNames.Flashcards,
     )
+    # TODO Add relationship to FlashcardAnswer
+    # FlashcardsAnswers = relationship(
+    #     dbNames.SingleFlashcardAnswer,
+    #     back_populates=dbNames.SingleFlashcard,
+    #     cascade="all, delete-orphan",
+    # )
 
     def __repr__(self):
         return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
@@ -75,6 +82,7 @@ class FlashcardAnswer(Base):
     Flashcard_id = Column(Integer, ForeignKey(f"{dbNames.Flashcards}.id"))
     is_correct = Column(Integer)
 
+    # TODO Add relationship to Flashcard
     Flashcard = relationship("Flashcard")
 
     def __repr__(self):
