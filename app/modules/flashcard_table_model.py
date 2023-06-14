@@ -26,13 +26,13 @@ class FlashcardTableModel(AlchemicalTableModel):
         self.deck_id = deck_id
 
         col_extra_properties = {
-            "question": {"display_name": "Question", "flags": {"editable": True}},
+            "question": {"display_name": "Question", "flags": {"editable": False}},
             "answer": {"display_name": "Answer", "flags": {"editable": False}},
             "difficulty_level": {
                 "display_name": "Difficulty",
                 "flags": {"editable": False},
             },
-            "id": {"display_name": "#", "flags": {"editable": False}},
+            "id": {"display_name": "№", "flags": {"editable": False}},
         }
 
         cols = [

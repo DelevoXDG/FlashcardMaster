@@ -21,9 +21,9 @@ log.setLevel(logging.DEBUG)
 class DeckTableModel(AlchemicalTableModel):
     def __init__(self):
         col_extra_properties = {
-            "title": {"display_name": "Title", "flags": {"editable": True}},
+            "title": {"display_name": "Title", "flags": {"editable": False}},
             "Category_id": {"display_name": "Category", "flags": {}},
-            "id": {"display_name": "#", "flags": {"editable": False}},
+            "id": {"display_name": "№", "flags": {"editable": False}},
         }
 
         cols = [

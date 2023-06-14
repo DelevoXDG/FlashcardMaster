@@ -30,12 +30,9 @@
     <rect>
      <x>320</x>
      <y>340</y>
-     <width>40</width>
-     <height>40</height>
+     <width>41</width>
+     <height>41</height>
     </rect>
-   </property>
-   <property name="toolTip">
-    <string>Сorrect answer</string>
    </property>
    <property name="text">
     <string/>
@@ -59,9 +56,6 @@
      <width>40</width>
      <height>40</height>
     </rect>
-   </property>
-   <property name="toolTip">
-    <string>Incorrect answer</string>
    </property>
    <property name="text">
     <string/>
@@ -92,9 +86,6 @@
      <pointsize>14</pointsize>
      <bold>false</bold>
     </font>
-   </property>
-   <property name="toolTip">
-    <string>Show answer</string>
    </property>
    <property name="text">
     <string/>
@@ -127,9 +118,6 @@
      <widget class="Line" name="line">
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
