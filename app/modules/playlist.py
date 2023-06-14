@@ -19,7 +19,7 @@ class Playlist:
         session = get_scoped_session()
 
         # Get flashcards from database
-        flashcards = session.query(Flashcard).filter(Flashcard.deck_id.in_(deck_ids)).all()
+        flashcards = session.query(Flashcard).filter(Flashcard.Deck_id.in_(deck_ids)).all()
 
         # Sort flashcards by given difficulty level
         if difficulty in self.difficulties:
