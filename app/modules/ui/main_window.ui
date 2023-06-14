@@ -95,7 +95,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Import</string>
+     <string>Import data</string>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -127,7 +127,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Export</string>
+     <string>Export data</string>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -180,7 +180,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Add deck of flashcards</string>
+     <string>Add decks of flashcards</string>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -212,7 +212,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Delete decks from the collection</string>
+     <string>Delete decks of flashcards</string>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -276,7 +276,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Merge decks</string>
+     <string>Merge decks of flashcards</string>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
