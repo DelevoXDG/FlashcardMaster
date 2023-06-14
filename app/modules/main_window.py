@@ -197,12 +197,13 @@ class MainWindow(QMainWindow):
         self.refresh_deck_table()
 
     def create_playlist(self):
-        # TODO: Implement
         selected_deck_rows = self.selection_model.selectedRows()
-        raise NotImplementedError
-
-        decks = None
 
         if not selected_deck_rows:
             return
-        playlist_widget = PlaylistWidget(decks, parent=self)
+
+        selected_decks = [self.model.results[row.row()] for row in selected_deck_rows]
+        selected_deck_ids = [deck.id for deck in selected_decks]
+
+        playlist_widget = PlaylistWidget(selected_deck_ids, parent=self)
+        playlist_widget.show()
