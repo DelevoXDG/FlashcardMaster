@@ -38,6 +38,9 @@ class Deck(Base):
         back_populates=dbNames.Decks,
     )
 
+    def default_title(self):
+        return f"Deck #{self.id}"
+
     def __repr__(self):
         return f"<Deck(id={self.id}, title='{self.title}')>"
 

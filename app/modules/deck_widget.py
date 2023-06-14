@@ -34,13 +34,6 @@ class DeckWidget(QWidget):
         super().__init__(parent)
         self.setWindowFlag(Qt.WindowType.Window)
 
-        session = get_universal_session()
-        self.deck = session.query(Deck).filter_by(id=deck_id).first()
-        self.deck_row = deck_row
-
-        self.model = FlashcardTableModel(deck_id)
-        self.set_window_title(self.deck.title)
-
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ui_path = os.path.join(current_dir, "ui", "deck_widget.ui")
         uic.loadUi(ui_path, self)
@@ -51,6 +44,14 @@ class DeckWidget(QWidget):
         self.name_line: QLineEdit = self.name_line
         self.category_combo_box: QComboBox = self.category_combo_box
         self.save_button: QPushButton = self.save_button
+
+        session = get_universal_session()
+        self.deck = session.query(Deck).filter_by(id=deck_id).first()
+        self.deck_row = deck_row
+
+        self.model = FlashcardTableModel(deck_id)
+
+        self.set_window_title(self.deck.title)
 
         self.save_button.setEnabled(False)
         self.save_button.clicked.connect(self.save_deck_name)
@@ -110,9 +111,7 @@ class DeckWidget(QWidget):
             #     {Deck.title: new_name}
             # )
             session.commit()
-            # session.refresh(self.deck)
-            # session.flush()
-            # session.remove()
+
         except Exception as e:
             log.error(f"Failed to save deck name: {str(e)}")
         else:

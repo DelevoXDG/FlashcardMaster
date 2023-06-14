@@ -238,6 +238,15 @@ class AlchemicalTableModel(QAbstractTableModel):
 
         return False
 
+    def insertEmptyRecord(self):
+        session = self.session
+
+        new_record = self.db_object_model()
+        session.add(new_record)
+        session.commit()
+
+        return new_record
+
     def removeRows(self, rows):
         rows.sort(reverse=True)
 

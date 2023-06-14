@@ -1,16 +1,18 @@
-from . import Deck
 from . import (
+    Deck,
+    Flashcard,
+    AlchemizedColumn,
     get_scoped_session,
     get_universal_session,
 )
 
-from . import AlchemizedColumn
 from .alchemical_model import AlchemicalTableModel
 
 from PyQt6.QtCore import (
     QVariant,
     Qt,
 )
+import sqlalchemy
 
 import logging
 
@@ -56,3 +58,37 @@ class DeckTableModel(AlchemicalTableModel):
             value = str(getattr(row, title))
 
         return QVariant(value)
+
+    def merge_decks(self, deck_ids, category_id=None, title=None):
+        """
+        Merge decks into a new deck
+        """
+        new_deck: Deck = self.insertEmptyRecord()
+
+        session = self.session
+        if category_id is None:
+            category_id = sqlalchemy.null()
+        if title is None:
+            title = new_deck.default_title()
+
+        new_deck.Category_id = category_id
+        new_deck.title = title
+
+        session.commit()
+
+        flashcards_to_update = (
+            session.query(Flashcard).filter(Flashcard.Deck_id.in_(deck_ids)).all()
+        )
+        for flashcard in flashcards_to_update:
+            flashcard.Deck_id = new_deck.id
+        session.commit()
+
+        for deck_id in deck_ids:
+            deck = session.query(Deck).filter_by(id=deck_id).first()
+            if deck:
+                session.delete(deck)
+        session.commit()
+
+        self.refresh()
+
+        return new_deck
