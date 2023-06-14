@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>Study Playlist Creation</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font-family: Noto Sans SC;</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <layout class="QVBoxLayout" name="layout">

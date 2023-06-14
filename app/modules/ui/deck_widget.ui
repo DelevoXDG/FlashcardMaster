@@ -25,9 +25,6 @@
   <property name="windowTitle">
    <string>Deck Editor</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font-family: Noto Sans SC;</string>
-  </property>
   <widget class="QPushButton" name="add_button">
    <property name="geometry">
     <rect>

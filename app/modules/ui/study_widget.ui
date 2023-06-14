@@ -25,9 +25,6 @@
   <property name="windowTitle">
    <string>Study Mode</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font-family: Noto Sans SC;</string>
-  </property>
   <widget class="QPushButton" name="correct_button">
    <property name="geometry">
     <rect>

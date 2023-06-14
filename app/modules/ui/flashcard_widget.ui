@@ -25,9 +25,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">font-family: Noto Sans SC;</string>
-  </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
