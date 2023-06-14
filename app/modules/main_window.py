@@ -147,9 +147,7 @@ class MainWindow(QMainWindow):
         deck_widget.show()
 
     def handle_deck_added(self, deck):
-        new_deck = Deck(
-            title=deck.title
-        )  # Assuming the title is provided in the deck widget
+        new_deck = Deck(title=deck.title)
 
     def delete_decks(self):
         del_rows = self.selection_model.selectedRows()
@@ -166,7 +164,9 @@ class MainWindow(QMainWindow):
 
         categories = {deck.Category_id for deck in selected_decks}
         if len(categories) > 1:
-            QMessageBox.critical(self, "Merge error", "Selected decks must have the same category")
+            QMessageBox.critical(
+                self, "Merge error", "Selected decks must have the same category"
+            )
             return
 
         selected_deck_ids = [deck.id for deck in selected_decks]

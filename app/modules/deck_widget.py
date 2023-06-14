@@ -1,10 +1,6 @@
 import os
 from PyQt6.QtWidgets import (
-    QMainWindow,
-    QVBoxLayout,
     QWidget,
-    QListView,
-    QLabel,
     QTableView,
     QAbstractItemView,
     QPushButton,
@@ -12,17 +8,16 @@ from PyQt6.QtWidgets import (
     QComboBox,
 )
 from PyQt6.QtCore import QSize, QItemSelectionModel, Qt
-from PyQt6.QtGui import (
-    QStandardItemModel,
-    QStandardItem,
-)
+
 from PyQt6 import uic
 from . import (
     Deck,
     Flashcard,
     FlashcardTableModel,
     get_scoped_session,
+    get_universal_session,
 )
+
 import logging
 
 log = logging.getLogger(__name__)
@@ -39,10 +34,9 @@ class DeckWidget(QWidget):
         super().__init__(parent)
         self.setWindowFlag(Qt.WindowType.Window)
 
-        session = get_scoped_session()
+        session = get_universal_session()
         self.deck = session.query(Deck).filter_by(id=deck_id).first()
         self.deck_row = deck_row
-        session.remove()
 
         self.model = FlashcardTableModel(deck_id)
         self.set_window_title(self.deck.title)
@@ -108,10 +102,7 @@ class DeckWidget(QWidget):
             return
 
         try:
-            if self.parent() is not None:
-                session = self.parent().model.session
-            else:
-                session = get_scoped_session()
+            session = get_universal_session()
 
             self.deck = session.query(Deck).filter_by(id=self.deck.id).first()
             self.deck.title = new_name
@@ -127,7 +118,7 @@ class DeckWidget(QWidget):
         else:
             if self.parent() is not None:
                 self.parent().refresh_deck_table()
-            # Update the deck's title in the window
+
             self.set_window_title(self.deck.title)
             log.info("Deck name saved successfully")
             self.save_button.setEnabled(False)

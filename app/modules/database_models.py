@@ -122,11 +122,36 @@ def get_scoped_session():
     return Session
 
 
-def get_session():
-    engine = EngineSingleton().engine
-    session_factory = sessionmaker(bind=engine)
-    Session = session_factory()
-    return Session
+class SessionSingleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._session = None
+        return cls._instance
+
+    @property
+    def session(self):
+        if self._session is None:
+            self._session = self._create_session()
+        return self._session
+
+    def _create_session(self):
+        engine = EngineSingleton().engine
+        session_factory = sessionmaker(bind=engine)
+        return session_factory()
+
+
+# def get_session():
+#     engine = EngineSingleton().engine
+#     session_factory = sessionmaker(bind=engine)
+#     Session = session_factory()
+#     return Session
+
+
+def get_universal_session():
+    return SessionSingleton().session
 
 
 global engine

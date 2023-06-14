@@ -1,6 +1,6 @@
 from . import (
     get_scoped_session,
-    get_session,
+    get_universal_session,
 )
 from . import (
     AlchemizedColumn,

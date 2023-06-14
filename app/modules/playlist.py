@@ -4,7 +4,7 @@ from . import (
     Deck,
     Flashcard,
     get_scoped_session,
-    get_session,
+    get_universal_session,
 )
 
 
@@ -17,7 +17,7 @@ class Playlist:
 
     def __init__(self, deck_ids, difficulty=None, study_type=None):
         self.flashcard_queue = deque()
-        session = get_session()
+        session = get_universal_session()
 
         # Get flashcards from database
         flashcards = (
