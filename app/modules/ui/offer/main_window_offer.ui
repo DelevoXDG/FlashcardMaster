@@ -38,12 +38,13 @@
    <string>Flashcard Master</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font-family: Noto Sans SC;</string>
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(81, 0, 135, 255), stop:0.427447 rgba(41, 61, 132, 235), stop:1 rgba(155, 79, 165, 255));
+font-family: Noto Sans SC;</string>
   </property>
   <property name="documentMode">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="CentralWidget">
+  <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
      <horstretch>0</horstretch>
@@ -56,9 +57,9 @@
    <widget class="QPushButton" name="create_playlist_button">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>250</x>
       <y>550</y>
-      <width>40</width>
+      <width>160</width>
       <height>40</height>
      </rect>
     </property>
@@ -69,20 +70,24 @@
      <string>Create study playlist</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 16px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 160px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../assets/study.png</normaloff>../../assets/study.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>24</width>
-      <height>24</height>
-     </size>
+     <string>Create Study Playlist</string>
     </property>
    </widget>
    <widget class="QPushButton" name="import_button">
@@ -101,7 +106,21 @@
      <string>Import</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 16px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 40px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -133,7 +152,21 @@
      <string>Export</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 16px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 40px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -159,19 +192,53 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QTableView {
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+}
+QTableView::section {
+background-color: rgba(53, 53, 53);
+color: white;
+border: none;
+height: 50px;
+font-size: 14px
+}
+QTableView::item {
+border-style: none;
+border-bottom: rgba(255, 255, 255, 50);
+}
+QTableView::item:selected {
+border: none;
+color: rgba(255, 255, 255);
+background-color: rgba(255, 255, 255, 50);
+}</string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="showGrid">
+     <bool>false</bool>
     </property>
     <property name="sortingEnabled">
      <bool>true</bool>
     </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>135</number>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
    </widget>
    <widget class="QPushButton" name="add_button">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>550</y>
-      <width>40</width>
-      <height>40</height>
+      <width>41</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="cursor">
@@ -181,7 +248,21 @@
      <string>Add deck of flashcards</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 15px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 40px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -210,10 +291,24 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Delete decks from the collection</string>
+     <string>Delete deck from the collection</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 15px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 40px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -232,9 +327,9 @@
    <widget class="QPushButton" name="stats_button">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>330</x>
       <y>10</y>
-      <width>40</width>
+      <width>80</width>
       <height>40</height>
      </rect>
     </property>
@@ -242,23 +337,27 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Show statistics</string>
+     <string>Statistics</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 16px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 80px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../assets/graph.png</normaloff>../../assets/graph.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>24</width>
-      <height>24</height>
-     </size>
+     <string>Stats</string>
     </property>
    </widget>
    <widget class="QPushButton" name="merge_button">
@@ -266,7 +365,7 @@
      <rect>
       <x>110</x>
       <y>550</y>
-      <width>40</width>
+      <width>80</width>
       <height>40</height>
      </rect>
     </property>
@@ -274,17 +373,27 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>Merge decks</string>
+     <string>Delete deck from the collection</string>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QPushButton {
+color: white;
+font-size: 16px;
+background-color: rgba(255, 255, 255, 30);
+border: 1px solid rgba(255, 255, 255, 40);
+border-radius: 7px;
+width: 80px;
+height: 40px;
+}
+QPushButton:hover {
+background-color: rgba(255, 255, 255, 40);
+}
+QPushButton:pressed {
+background-color: rgba(255, 255, 255, 70);
+}</string>
     </property>
     <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../assets/merge_better.png</normaloff>../../assets/merge_better.png</iconset>
+     <string>Merge</string>
     </property>
     <property name="iconSize">
      <size>
