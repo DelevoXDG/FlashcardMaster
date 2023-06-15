@@ -5,6 +5,7 @@ from . import (
     Flashcard,
     get_scoped_session,
     get_universal_session,
+    FlashcardAnswer,
 )
 
 
@@ -17,11 +18,12 @@ class Playlist:
 
     def __init__(self, deck_ids, difficulty=None, study_type=None):
         self.flashcard_queue = deque()
-        session = get_universal_session()
+        # MAYBE WRONG. I do not know !!!
+        self.session = get_universal_session()
 
         # Get flashcards from database
         flashcards = (
-            session.query(Flashcard).filter(Flashcard.Deck_id.in_(deck_ids)).all()
+            self.session.query(Flashcard).filter(Flashcard.Deck_id.in_(deck_ids)).all()
         )
 
         # Sort flashcards by given difficulty level
@@ -42,8 +44,17 @@ class Playlist:
     def has_next(self):
         return len(self) > 0
 
+    def record_flashcard_answer(self, is_correct: bool):
+        flashcard_answer = FlashcardAnswer()
+        flashcard_answer.is_correct = is_correct
+        flashcard_answer.Flashcard = self.cur_card
+
+        self.session.add(flashcard_answer)
+        self.session.commit()
+
     def handle_cur(self, is_correct):
         # TODO add entry to flashcard answers
+        self.record_flashcard_answer(is_correct)
 
         if self.cur_card is None:
             return
