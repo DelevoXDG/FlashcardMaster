@@ -1,12 +1,15 @@
 from . import (
     get_scoped_session,
-    get_session,
+    get_universal_session,
 )
 from . import (
     AlchemizedColumn,
     Flashcard,
 )
-from . import DifficultyLevel
+from .enums import (
+    DifficultyLevel,
+    CardType,
+)
 
 
 from .alchemical_model import AlchemicalTableModel
@@ -26,13 +29,14 @@ class FlashcardTableModel(AlchemicalTableModel):
         self.deck_id = deck_id
 
         col_extra_properties = {
-            "question": {"display_name": "Question", "flags": {"editable": True}},
+            "question": {"display_name": "Question", "flags": {"editable": False}},
             "answer": {"display_name": "Answer", "flags": {"editable": False}},
             "difficulty_level": {
                 "display_name": "Difficulty",
                 "flags": {"editable": False},
             },
-            "id": {"display_name": "#", "flags": {"editable": False}},
+            "card_type": {"display_name": "Type", "flags": {"editable": False}},
+            "id": {"display_name": "№", "flags": {"editable": False}},
         }
 
         cols = [
@@ -77,10 +81,20 @@ class FlashcardTableModel(AlchemicalTableModel):
         title = self.fields[index.column()].column_name
         column = self.fields[index.column()].column
 
-        if title == "difficulty_level":
-            diff_num = int(getattr(row, title))
-            # Get the category name instead of category_id
-            value = DifficultyLevel.get_name(diff_num)
+        if title == "card_type":
+            if getattr(row, title) is None:
+                log.warning("Invalid Flashcard in DB - card_type is NULL")
+                value = "N/A"
+            else:
+                card_type = int(getattr(row, title))
+                value = CardType.get_name(card_type)
+        elif title == "difficulty_level":
+            if getattr(row, title) is None:
+                log.warning("Invalid Flashcard in DB - difficulty level is NULL")
+                value = "N/A"
+            else:
+                diff_num = int(getattr(row, title))
+                value = DifficultyLevel.get_name(diff_num)
         else:
             value = str(getattr(row, title))
 

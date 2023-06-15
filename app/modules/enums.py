@@ -14,7 +14,7 @@ class DifficultyLevel:
         return level_names.get(level, "N/A")
 
 
-class CardTypes:
+class CardType:
     Text = 0
     TrueFalse = 1
     MultipleChoice = 2

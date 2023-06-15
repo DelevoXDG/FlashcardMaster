@@ -11,15 +11,17 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt
 from PyQt6.uic import loadUi
-from flashcard_widget import FlashcardWidget
-from playlist import Playlist
-from database_models import Flashcard
-import answer_widget
+from .flashcard_widget import FlashcardWidget
+from .playlist import Playlist
+from . import Flashcard
+from . import answer_widget
 
 
 class StudyWidget(QWidget):
     def __init__(self, playlist, parent=None):
         super().__init__(parent)
+        self.setWindowFlag(Qt.WindowType.Window)
+
         self.playlist: Playlist = playlist
         self.load_ui()
         self.flipped = False
@@ -74,21 +76,36 @@ class StudyWidget(QWidget):
             self.flashcard_widget = label
             placeholder.deleteLater()
 
-    def flip(self):
-        self.flipped = not self.flipped
+    def handle_visibility_button(self):
         upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
         if self.flipped:
             flip_icon_path = os.path.join(upper_dir, "assets", "hide.png")
         else:
             flip_icon_path = os.path.join(upper_dir, "assets", "visible.png")
         self.flip_button.setIcon(QIcon(flip_icon_path))
+
+    def flip(self):
+        self.flipped = not self.flipped
+        self.handle_visibility_button()
+
+        if not len(self.playlist):
+            self.close()
+            return
+
         self.flashcard_widget.answer_widget.flip()
 
+    def reset_gui(self):
+        self.flipped = False
+        self.handle_visibility_button()
+
     def correct_button_action(self):
+        self.reset_gui()
         self.playlist.handle_cur(True)
         self.load_next_flashcard()
 
     def wrong_button_action(self):
+        self.reset_gui()
         self.playlist.handle_cur(False)
         self.load_next_flashcard()
 

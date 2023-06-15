@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>StudyMode</class>
+ <widget class="QWidget" name="StudyMode">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>429</height>
+    <width>420</width>
+    <height>400</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>420</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>420</width>
+    <height>400</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Study Mode</string>
@@ -16,11 +28,24 @@
   <widget class="QPushButton" name="correct_button">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>380</y>
-     <width>41</width>
-     <height>41</height>
+     <x>320</x>
+     <y>340</y>
+     <width>40</width>
+     <height>40</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Сorrect answer</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+background-color: rgba(165, 165, 165, 30)
+}</string>
    </property>
    <property name="text">
     <string/>
@@ -39,11 +64,24 @@
   <widget class="QPushButton" name="wrong_button">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>380</y>
-     <width>41</width>
-     <height>41</height>
+     <x>370</x>
+     <y>340</y>
+     <width>40</width>
+     <height>40</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string>Incorrect answer</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+background-color: rgba(165, 165, 165, 30)
+}</string>
    </property>
    <property name="text">
     <string/>
@@ -59,18 +97,59 @@
     </size>
    </property>
   </widget>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QPushButton" name="flip_button">
    <property name="geometry">
     <rect>
-     <x>-1</x>
-     <y>-1</y>
+     <x>10</x>
+     <y>340</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Noto Sans SC</family>
+     <pointsize>16</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover {
+background-color: rgba(165, 165, 165, 30)
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/visible.png</normaloff>../../assets/visible.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
      <width>401</width>
-     <height>371</height>
+     <height>311</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="layout">
     <item>
-     <widget class="QWidget" name="flashcard_widget" native="true"/>
+     <widget class="QWidget" name="flashcard_widget" native="true">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="Line" name="line">
@@ -86,35 +165,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QPushButton" name="flip_button">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>380</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>../../assets/visible.png</normaloff>../../assets/visible.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>24</width>
-     <height>24</height>
-    </size>
-   </property>
   </widget>
  </widget>
  <resources/>

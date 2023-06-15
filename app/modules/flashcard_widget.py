@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import (
     QLabel,
 )
 from PyQt6.uic import loadUi
-from answer_widget_factory import AnswerWidgetFactory
+from .answer_widget_factory import AnswerWidgetFactory
 
 
 class FlashcardWidget(QWidget):
