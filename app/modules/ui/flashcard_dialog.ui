@@ -262,7 +262,7 @@ background-color: rgba(165, 165, 165, 30)
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/save.png</normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/save.png</iconset>
+          <normaloff>../../assets/save.png</normaloff>../../assets/save.png</iconset>
         </property>
         <property name="iconSize">
          <size>
