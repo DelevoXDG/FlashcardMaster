@@ -3,14 +3,14 @@ from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 
 from modules.database_models import (
     Deck,
-    get_session,
+    get_universal_session,
     Flashcard,
 )
 
 import json
 from typing import List
 
-# from app.modules.database_models import get_session
+# from app.modules.database_models import get_universal_session
 
 
 class DeckParser:
@@ -35,10 +35,8 @@ class DeckParser:
         for flashcard_dictionary in deck_dictionary["Flashcards"]:
             self.__import_flashcard(flashcard_dictionary, new_deck.id, session)
 
-
-
     def import_decks(self, decks_json: str) -> None:
-        session = get_session()
+        session = get_universal_session()
         deck_dictionaries = json.loads(decks_json)
         for deck_dictionary in deck_dictionaries:
             self.__import_deck(deck_dictionary, session)
@@ -56,19 +54,21 @@ class DeckParser:
         flashcard_dictionaries = []
         for flashcard in deck.Flashcards:
             flashcard_dictionaries.append(
-                self.__map_flashcard_to_dictionary_with_necessery_data(flashcard))
+                self.__map_flashcard_to_dictionary_with_necessery_data(flashcard)
+            )
         deck_dictionary["Flashcards"] = flashcard_dictionaries
         return deck_dictionary
 
-
-
     def export_decks(self, decks: List[Deck]) -> str:
-        decks_json = json.dumps(decks, default=lambda o: self.__map_deck_to_dictionary_with_necessary_data(o))
+        decks_json = json.dumps(
+            decks,
+            default=lambda o: self.__map_deck_to_dictionary_with_necessary_data(o),
+        )
         return decks_json
 
 
 if __name__ == "__main__":
-    session = get_session()
+    session = get_universal_session()
     deck1 = session.query(Deck).get(51)
     deck2 = session.query(Deck).get(66)
     deck_parser = DeckParser()
@@ -76,4 +76,4 @@ if __name__ == "__main__":
     print(exported_data)
     deck_parser.import_decks(exported_data)
     # deck_parser.export_decks([deck])
-    #deck_parser.import_deck(json.loads(exported_data))
+    # deck_parser.import_deck(json.loads(exported_data))
