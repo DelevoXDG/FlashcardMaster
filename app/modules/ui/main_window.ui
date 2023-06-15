@@ -178,7 +178,7 @@ background-color: rgba(165, 165, 165, 30)
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <stylestrategy>PreferAntialias</stylestrategy>
      </font>
     </property>
     <property name="styleSheet">

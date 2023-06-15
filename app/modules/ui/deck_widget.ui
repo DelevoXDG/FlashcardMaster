@@ -166,11 +166,6 @@ padding-left: 8px;
      <height>240</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
   </widget>
   <widget class="QPushButton" name="save_button">
    <property name="geometry">
