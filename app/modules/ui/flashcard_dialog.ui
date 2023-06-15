@@ -52,7 +52,7 @@ font-size: 24px;</string>
             <string notr="true">font-size: 16px;</string>
            </property>
            <property name="text">
-            <string>Change the type of card:</string>
+            <string>Choose the type of card*:</string>
            </property>
           </widget>
          </item>
@@ -65,7 +65,10 @@ font-size: 14px;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>-1</number>
+           </property>
+           <property name="placeholderText">
+            <string>Type of card</string>
            </property>
            <item>
             <property name="text">
@@ -74,7 +77,7 @@ font-size: 14px;
            </item>
            <item>
             <property name="text">
-             <string>True / False</string>
+             <string>True/False</string>
             </property>
            </item>
            <item>
@@ -102,7 +105,7 @@ font-size: 14px;
             <string notr="true">font-size: 16px;</string>
            </property>
            <property name="text">
-            <string>Change a question:</string>
+            <string>Enter a question*:</string>
            </property>
           </widget>
          </item>
@@ -137,7 +140,7 @@ font-size: 14px;
             <string notr="true">font-size: 16px;</string>
            </property>
            <property name="text">
-            <string>Change an answer:</string>
+            <string>Write an answer*:</string>
            </property>
           </widget>
          </item>
@@ -172,7 +175,7 @@ font-size: 14px;
             <string notr="true">font-size: 16px;</string>
            </property>
            <property name="text">
-            <string>Change the level of difficulty:</string>
+            <string>Choose the level of difficulty*:</string>
            </property>
           </widget>
          </item>
@@ -185,7 +188,10 @@ font-size: 14px;
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>-1</number>
+           </property>
+           <property name="placeholderText">
+            <string>Level of difficulty</string>
            </property>
            <item>
             <property name="text">
@@ -208,9 +214,9 @@ font-size: 14px;
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="save_changes_button">
+       <widget class="QPushButton" name="add_card_button">
         <property name="toolTip">
-         <string>Save changes</string>
+         <string>Add Flashcard</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>

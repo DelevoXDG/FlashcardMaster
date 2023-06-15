@@ -94,12 +94,13 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
+     <pointsize>-1</pointsize>
     </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QLineEdit {
 padding-left: 8px;
+font-size: 16px;
 }</string>
    </property>
    <property name="placeholderText">
@@ -117,7 +118,7 @@ padding-left: 8px;
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
+     <pointsize>-1</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -126,6 +127,7 @@ padding-left: 8px;
    <property name="styleSheet">
     <string notr="true">QComboBox {
 padding-left: 8px;
+font-size: 16px;
 }</string>
    </property>
    <property name="placeholderText">

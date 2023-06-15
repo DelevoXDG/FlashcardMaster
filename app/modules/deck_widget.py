@@ -27,6 +27,8 @@ from . import (
     get_universal_session,
 )
 
+from .flashcard_editor_widget import FlashcardEditorWidget
+
 import logging
 
 log = logging.getLogger(__name__)
@@ -300,16 +302,18 @@ class DeckWidget(QWidget):
         session = (
             self.model.session if self.model is not None else get_universal_session()
         )
-        new_flascard = Flashcard(
+        new_flashcard = Flashcard(
             Deck_id=self.deck.id,
             card_type=CardType.Text,
             difficulty_level=DifficultyLevel.Medium,
         )
-        session.add(new_flascard)
+        session.add(new_flashcard)
         session.commit()
 
         self.refresh_model_and_view()
-        # TODO open flashcard editor widget in a new window
+
+        flashcard_editor_widget = FlashcardEditorWidget(new_flashcard, parent=self)
+        flashcard_editor_widget.show()
 
     def delete_selected_flashcards(self):
         """Delete selected flashcards from the database"""
@@ -318,5 +322,4 @@ class DeckWidget(QWidget):
 
     def close(self):
         self.delete_unused_categories()
-
         super().close()
