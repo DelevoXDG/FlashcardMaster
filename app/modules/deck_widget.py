@@ -309,7 +309,6 @@ class DeckWidget(QWidget):
         )
         session.add(new_flashcard)
         session.commit()
-
         self.refresh_model_and_view()
 
         flashcard_editor_widget = FlashcardEditorWidget(new_flashcard, parent=self)
