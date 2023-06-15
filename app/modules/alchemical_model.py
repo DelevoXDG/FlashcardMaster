@@ -8,7 +8,7 @@ from PyQt6.QtCore import (
 from sqlalchemy.orm import joinedload
 from . import (
     get_scoped_session,
-    get_session,
+    get_universal_session,
 )
 import logging
 from modules import AlchemizedColumn
@@ -29,7 +29,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.relationship = relationship
         self.db_object_model = db_object_model
 
-        self._session = get_session()
+        self._session = get_universal_session()
         self.query = self._session.query(db_object_model)
 
         log.debug(f"Passed columns: {columns}")
@@ -237,6 +237,15 @@ class AlchemicalTableModel(QAbstractTableModel):
                 return True
 
         return False
+
+    def insertEmptyRecord(self):
+        session = self.session
+
+        new_record = self.db_object_model()
+        session.add(new_record)
+        session.commit()
+
+        return new_record
 
     def removeRows(self, rows):
         rows.sort(reverse=True)

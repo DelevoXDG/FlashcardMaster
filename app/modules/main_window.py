@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import (
     QWidget,
     QListView,
     QLabel,
+    QHeaderView,
     QTableView,
     QAbstractItemView,
     QMessageBox,
@@ -40,7 +41,6 @@ log.setLevel(logging.DEBUG)
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        # self.setWindowTitle("Flashcard Master")
 
         self.model = DeckTableModel()
         # dbtest.add_sample_decks()
@@ -66,14 +66,8 @@ class MainWindow(QMainWindow):
         self.view.resizeColumnsToContents()
         self.view.setSortingEnabled(True)
         self.view.horizontalHeader().setSortIndicator(0, Qt.SortOrder.AscendingOrder)
-        # self.view.sortByColumn(0, Qt.SortOrder.AscendingOrder)
 
         self.selection_model = self.view.selectionModel()
-        self.add_button.clicked.connect(self.add_deck)
-        self.delete_button.clicked.connect(self.delete_decks)
-        self.merge_button.clicked.connect(self.merge_playlists)
-        self.create_playlist_button.clicked.connect(self.create_playlist)
-        self.view.doubleClicked.connect(self.open_deck_widget)
 
         self.delete_button.setEnabled(False)
         self.create_playlist_button.setEnabled(False)
@@ -81,11 +75,20 @@ class MainWindow(QMainWindow):
         self.merge_button.setEnabled(False)
         self.stats_button.setEnabled(False)
 
+        self.setup_horizontal_header()
+        self.model.refresh()
+        self.connect_signals()
+
+    def connect_signals(self):
+        self.add_button.clicked.connect(self.add_deck)
+        self.delete_button.clicked.connect(self.delete_decks)
+        self.merge_button.clicked.connect(self.merge_decks)
+        self.create_playlist_button.clicked.connect(self.create_playlist)
+        self.view.doubleClicked.connect(self.open_selected_deck_widget)
         self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
 
-        self.model.refresh()
-
-    def refresh_deck_table(self):
+    def refresh_model_and_view(self):
+        """Refresh the table view and the model - called after any changes to the records in the model"""
         # index = self.model.index(deck_row.row(), 1)
         # self.model.dataChanged.emit(index, index)
         # self.model.refresh()
@@ -94,13 +97,26 @@ class MainWindow(QMainWindow):
         self.model.refresh()
         self.view.resizeColumnsToContents()
 
-    # def sortByColumn(self):
-    #     """Sort the model by the selected column"""
-    #     col = self.view.horizontalHeader().sortIndicatorSection()
-    #     order = self.view.horizontalHeader().sortIndicatorOrder()
-    #     self.model.sort(col, order)
+    def setup_horizontal_header(self):
+        hh = self.view.horizontalHeader()
+        for i in range(0, self.model.columnCount()):
+            hh.setSectionResizeMode(i, QHeaderView.ResizeMode.ResizeToContents)
+        hh.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        self.view.setColumnWidth(2, 100)
+        self.view.setColumnWidth(4, 70)
+        if self.model.columnCount() == 6:
+            self.view.setColumnWidth(5, 70)
+        hh.setMinimumHeight(30)
 
-    def open_deck_widget(self):
+        bold_font = hh.font()
+        bold_font.setBold(True)
+        hh.setFont(bold_font)
+        hh.setHighlightSections(True)
+
+        return hh
+
+    def open_selected_deck_widget(self):
+        """Open a widget in a new window with the single selected deck"""
         selected_deck_rows = self.selection_model.selectedRows()
 
         if not selected_deck_rows:
@@ -109,7 +125,6 @@ class MainWindow(QMainWindow):
             return
 
         clicked_row = selected_deck_rows[0]
-
         selected_deck = self.model.results[clicked_row.row()]
 
         if selected_deck is None:
@@ -136,67 +151,50 @@ class MainWindow(QMainWindow):
         )
 
     def add_deck(self):
+        """Add a new empty deck with default title to the database and open related widget in a new window"""
+        new_deck = self.model.insertEmptyRecord()
+
         session = self.model.session
-        new_deck = Deck()
-        session.add(new_deck)
+        new_deck.title = new_deck.default_title()
         session.commit()
-        new_deck.title = f"Deck #{new_deck.id}"
-        session.commit()
-        self.refresh_deck_table()
+
+        self.refresh_model_and_view()
+
         deck_widget = DeckWidget(new_deck.id, parent=self)
         deck_widget.show()
 
-    def handle_deck_added(self, deck):
-        new_deck = Deck(
-            title=deck.title
-        )  # Assuming the title is provided in the deck widget
-
     def delete_decks(self):
+        """Delete selected decks from the database"""
         del_rows = self.selection_model.selectedRows()
         self.model._delete_rows(del_rows)
         dbtest.print_all_flashcards()
 
-    def merge_playlists(self):
+    def merge_decks(self):
+        """Merge selected playlists into a new playlist, transfering flashcards to the new playlist and deleting the old ones"""
         selected_deck_rows = self.selection_model.selectedRows()
 
         if not selected_deck_rows or len(selected_deck_rows) < 2:
             return
 
         selected_decks = [self.model.results[row.row()] for row in selected_deck_rows]
+        category_ids = {deck.Category_id for deck in selected_decks}
 
-        categories = {deck.Category_id for deck in selected_decks}
-        if len(categories) > 1:
-            QMessageBox.critical(self, "Merge error", "Selected decks must have the same category")
+        if len(category_ids) > 1:
+            log.error("Selected decks must have the same category")
+            QMessageBox.critical(
+                self, "Merge error", "Selected decks must have the same category"
+            )
             return
 
+        category_id = category_ids.pop()
+
         selected_deck_ids = [deck.id for deck in selected_decks]
+        self.model.merge_decks(selected_deck_ids, category_id=category_id)
 
-        session = self.model.session
-        new_deck = Deck()
-        new_deck.Category_id = categories.pop()
-        session.add(new_deck)
-        session.commit()
-        new_deck.title = f"Deck #{new_deck.id}"
-        session.commit()
-
-        flashcards_to_update = (
-            session.query(Flashcard)
-            .filter(Flashcard.Deck_id.in_(selected_deck_ids))
-            .all()
-        )
-        for flashcard in flashcards_to_update:
-            flashcard.Deck_id = new_deck.id
-        session.commit()
-
-        for deck_id in selected_deck_ids:
-            deck = session.query(Deck).filter_by(id=deck_id).first()
-            if deck:
-                session.delete(deck)
-        session.commit()
-
-        self.refresh_deck_table()
+        self.refresh_model_and_view()
 
     def create_playlist(self):
+        """Create a new playlist from selected decks and open the playlist widget in a new window"""
         selected_deck_rows = self.selection_model.selectedRows()
 
         if not selected_deck_rows:

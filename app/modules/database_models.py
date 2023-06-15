@@ -38,6 +38,9 @@ class Deck(Base):
         back_populates=dbNames.Decks,
     )
 
+    def default_title(self):
+        return f"Deck #{self.id}"
+
     def __repr__(self):
         return f"<Deck(id={self.id}, title='{self.title}')>"
 
@@ -56,11 +59,11 @@ class Flashcard(Base):
         back_populates=dbNames.Flashcards,
     )
     # TODO Add relationship to FlashcardAnswer
-    # FlashcardsAnswers = relationship(
-    #     dbNames.SingleFlashcardAnswer,
-    #     back_populates=dbNames.SingleFlashcard,
-    #     cascade="all, delete-orphan",
-    # )
+    FlashcardAnswers = relationship(
+        dbNames.SingleFlashcardAnswer,
+        back_populates=dbNames.SingleFlashcard,
+        cascade="all, delete-orphan",
+    )
 
     def __repr__(self):
         return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
@@ -83,7 +86,10 @@ class FlashcardAnswer(Base):
     is_correct = Column(Integer)
 
     # TODO Add relationship to Flashcard
-    Flashcard = relationship("Flashcard")
+    Flashcard = relationship(
+        dbNames.SingleFlashcard,
+        back_populates=dbNames.FlashcardAnswers,
+    )
 
     def __repr__(self):
         return f"<FlashcardAnswer(id={self.id}, Flashcard_id={self.Flashcard_id}, is_correct={self.is_correct})>"
@@ -122,11 +128,36 @@ def get_scoped_session():
     return Session
 
 
-def get_session():
-    engine = EngineSingleton().engine
-    session_factory = sessionmaker(bind=engine)
-    Session = session_factory()
-    return Session
+class SessionSingleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._session = None
+        return cls._instance
+
+    @property
+    def session(self):
+        if self._session is None:
+            self._session = self._create_session()
+        return self._session
+
+    def _create_session(self):
+        engine = EngineSingleton().engine
+        session_factory = sessionmaker(bind=engine)
+        return session_factory()
+
+
+# def get_session():
+#     engine = EngineSingleton().engine
+#     session_factory = sessionmaker(bind=engine)
+#     Session = session_factory()
+#     return Session
+
+
+def get_universal_session():
+    return SessionSingleton().session
 
 
 global engine
