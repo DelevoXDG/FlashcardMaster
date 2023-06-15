@@ -17,7 +17,7 @@ class DeckParser:
     def __init__(self):
         pass
 
-    def __import_flashcard(self, flashcard_dictionary, new_deck_id):
+    def __import_flashcard(self, flashcard_dictionary, new_deck_id, session):
         new_flashcard = Flashcard(
             card_type=flashcard_dictionary["card_type"],
             question=flashcard_dictionary["question"],
@@ -28,12 +28,12 @@ class DeckParser:
         session.add(new_flashcard)
         session.commit()
 
-    def __import_deck(self, deck_dictionary):
+    def __import_deck(self, deck_dictionary, session):
         new_deck = Deck(title=deck_dictionary["title"])
         session.add(new_deck)
         session.commit()
         for flashcard_dictionary in deck_dictionary["Flashcards"]:
-            self.__import_flashcard(flashcard_dictionary, new_deck.id)
+            self.__import_flashcard(flashcard_dictionary, new_deck.id, session)
 
 
 
@@ -41,7 +41,7 @@ class DeckParser:
         session = get_session()
         deck_dictionaries = json.loads(decks_json)
         for deck_dictionary in deck_dictionaries:
-            self.__import_deck(deck_dictionary)
+            self.__import_deck(deck_dictionary, session)
 
     def __map_flashcard_to_dictionary_with_necessery_data(self, flashcard: Flashcard):
         flashcard_dict = flashcard.as_dict()

@@ -76,6 +76,7 @@ class MainWindow(QMainWindow):
         self.create_playlist_button.clicked.connect(self.create_playlist)
         self.view.doubleClicked.connect(self.open_deck_widget)
         self.export_button.clicked.connect(self.export_deck)
+        self.import_button.clicked.connect(self.import_decks)
 
         self.delete_button.setEnabled(False)
         self.create_playlist_button.setEnabled(False)
@@ -231,3 +232,18 @@ class MainWindow(QMainWindow):
         else:
             QMessageBox.warning(self, 'Ostrzeżenie', 'Nie wybrano lokalizacji pliku.')
 
+    def import_decks(self):
+        file_dialog = QFileDialog()
+        file_path, _ = file_dialog.getOpenFileName(self, 'Otwórz plik', '', 'Pliki json (*.json)')
+
+        if file_path:
+            try:
+                with open(file_path, 'r') as file:
+                    content = file.read()
+                    decks_parser = DeckParser()
+                    decks_parser.import_decks(content)
+                    self.refresh_deck_table()
+            except Exception as e:
+                QMessageBox.critical(self, 'Błąd', f'Wystąpił błąd podczas odczytu pliku: {str(e)}')
+        else:
+            QMessageBox.warning(self, 'Ostrzeżenie', 'Nie wybrano pliku.')
