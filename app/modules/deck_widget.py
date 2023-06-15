@@ -155,8 +155,11 @@ class DeckWidget(QWidget):
         except Exception as e:
             log.error(f"Failed to save deck name: {str(e)}")
         else:
-            if self.parent() is not None:
-                self.parent().refresh_deck_table()
+            if (
+                self.parent() is not None
+                and self.parent().refresh_model_and_view is not None
+            ):
+                self.parent().refresh_model_and_view()
 
             self.set_window_title(self.deck.title)
             log.info("Deck name saved successfully")
@@ -284,7 +287,7 @@ class DeckWidget(QWidget):
             log.warning("Category cannot be empty.")
             return
         else:
-            if category_id == self.deck.Category_id:
+            if self.deck.Category_id == category_id:
                 log.info("No changes made to the deck category.")
                 return
 
