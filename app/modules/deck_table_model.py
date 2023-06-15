@@ -14,6 +14,7 @@ from PyQt6.QtCore import (
     Qt,
 )
 import sqlalchemy
+from sqlalchemy.orm import joinedload
 
 import logging
 
@@ -108,3 +109,49 @@ class DeckTableModel(AlchemicalTableModel):
 
     def columnCount(self, parent=...):
         return super().columnCount(parent)
+
+    def refresh(self):
+        """Refreshes the table, including support for sorting count column"""
+
+        log.info("Refreshing the table")
+        self.layoutAboutToBeChanged.emit()
+        query = self.query
+        alch_col = None
+        if self._sort_column is not None:
+            alchemized_col = self.fields[self._sort_column]
+            col_name = alchemized_col.column_name
+            order = self._sort_order
+
+            if col_name == "flashcards_count":
+                flashcards_count = sqlalchemy.func.count(Flashcard.id).label(
+                    "flashcards_count"
+                )
+                query = query.outerjoin(Flashcard).group_by(self.db_object_model.id)
+
+                if order == Qt.SortOrder.DescendingOrder:
+                    query = query.order_by(flashcards_count.desc())
+                else:
+                    query = query.order_by(flashcards_count)
+            else:
+                alch_col = alchemized_col.column
+
+                if order == Qt.SortOrder.DescendingOrder:
+                    query = query.order_by(alch_col.desc())
+                else:
+                    query = query.order_by(alch_col)
+        else:
+            alch_col = None
+
+        if self.filter is not None:
+            query = query.filter(self.filter)
+
+        if alch_col is not None:
+            query = query.order_by(alch_col)
+
+        self.results = query.options(
+            joinedload(self.relationship, innerjoin=False)
+        ).all()
+        # self.results = query.all()
+
+        self.count = query.count()
+        self.layoutChanged.emit()

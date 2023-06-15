@@ -16,6 +16,7 @@ from PyQt6.QtWidgets import (
 
 from PyQt6 import uic
 
+
 from . import (
     Deck,
     Flashcard,
@@ -24,6 +25,7 @@ from . import (
     get_scoped_session,
 )
 
+from .enums import StudyType
 from .playlist import Playlist
 
 
@@ -51,7 +53,15 @@ class PlaylistWidget(QDialog):
         return self.difficulty_choice.currentText()
 
     def get_selected_study_type(self):
-        return self.study_type_choice.currentText()
+        study_type_str = self.study_type_choice.currentText()
+        if study_type_str == "Learning":
+            return StudyType.Learn
+        elif study_type_str == "Revision":
+            return StudyType.Review
+        elif study_type_str == "Random":
+            return StudyType.Random
+
+        log.error(f"Unknown study type: {study_type_str}")
 
     def start_study_session(self):
         difficulty = self.get_selected_difficulty()

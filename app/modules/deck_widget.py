@@ -11,6 +11,7 @@ from PyQt6.QtWidgets import (
     QComboBox,
     QInputDialog,
     QMessageBox,
+    QHeaderView,
 )
 
 from PyQt6.QtCore import QSize, QItemSelectionModel, Qt
@@ -87,6 +88,8 @@ class DeckWidget(QWidget):
 
         self.model.refresh()
 
+        self.setup_horizontal_header()
+
         columns_to_hide = set(["Deck_id"])
         self.hide_columns_by_name(columns_to_hide)
 
@@ -113,6 +116,21 @@ class DeckWidget(QWidget):
 
     def set_window_title(self, deck_title):
         self.setWindowTitle(f"Deck editor: {deck_title}")
+
+    def setup_horizontal_header(self):
+        hh = self.view.horizontalHeader()
+        for i in range(0, self.model.columnCount()):
+            hh.setSectionResizeMode(i, QHeaderView.ResizeMode.ResizeToContents)
+        hh.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        # self.view.setColumnWidth(2, 100)
+        hh.setMinimumHeight(30)
+
+        bold_font = hh.font()
+        bold_font.setBold(True)
+        hh.setFont(bold_font)
+        hh.setHighlightSections(True)
+
+        return hh
 
     def refresh_model_and_view(self):
         """Refresh the table view and the model - called after any changes to the records in the model"""
@@ -164,8 +182,11 @@ class DeckWidget(QWidget):
         except Exception as e:
             log.error(f"Failed to save deck name: {str(e)}")
         else:
-            if self.parent() is not None:
-                self.parent().refresh_deck_table()
+            if (
+                self.parent() is not None
+                and self.parent().refresh_model_and_view is not None
+            ):
+                self.parent().refresh_model_and_view()
 
             self.set_window_title(self.deck.title)
             log.info("Deck name saved successfully")
@@ -293,7 +314,9 @@ class DeckWidget(QWidget):
             log.warning("Category cannot be empty.")
             return
         else:
-            if category_id == self.deck.Category_id:
+            if self.deck.Category_id is None:
+                pass
+            elif self.deck.Category_id == category_id:
                 log.info("No changes made to the deck category.")
                 return
 
@@ -321,7 +344,9 @@ class DeckWidget(QWidget):
         session.commit()
         self.refresh_model_and_view()
 
-        flashcard_editor_widget = FlashcardEditorWidget(new_flashcard, True, parent=self)
+        flashcard_editor_widget = FlashcardEditorWidget(
+            new_flashcard, True, parent=self
+        )
         flashcard_editor_widget.show()
 
     def open_selected_card_widget(self):
@@ -343,7 +368,9 @@ class DeckWidget(QWidget):
             )
             return
 
-        flashcard_editor_widget = FlashcardEditorWidget(selected_card, False, parent=self)
+        flashcard_editor_widget = FlashcardEditorWidget(
+            selected_card, False, parent=self
+        )
         flashcard_editor_widget.show()
 
     def delete_selected_flashcards(self):

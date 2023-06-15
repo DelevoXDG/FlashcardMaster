@@ -47,6 +47,7 @@ class MainWindow(QMainWindow):
         # dbtest.add_sample_decks_with_categories()
         # dbtest.add_sample_flashcards()
         # dbtest.print_all_flashcards()
+        dbtest.print_correct_answers()
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ui_path = os.path.join(current_dir, "ui", "main_window.ui")
@@ -102,10 +103,7 @@ class MainWindow(QMainWindow):
         for i in range(0, self.model.columnCount()):
             hh.setSectionResizeMode(i, QHeaderView.ResizeMode.ResizeToContents)
         hh.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
-        self.view.setColumnWidth(2, 100)
-        self.view.setColumnWidth(4, 70)
-        if self.model.columnCount() == 6:
-            self.view.setColumnWidth(5, 70)
+        # self.view.setColumnWidth(2, 100)
         hh.setMinimumHeight(30)
 
         bold_font = hh.font()
