@@ -44,6 +44,9 @@ class Deck(Base):
     def __repr__(self):
         return f"<Deck(id={self.id}, title='{self.title}')>"
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 class Flashcard(Base):
     __tablename__ = dbNames.Flashcards
@@ -67,6 +70,9 @@ class Flashcard(Base):
 
     def __repr__(self):
         return f"<Flashcard(id={self.id}, card_type={self.card_type}, question='{self.question}', answer='{self.answer}', difficulty_level={self.difficulty_level}, Deck_id={self.Deck_id})>"
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Category(Base):

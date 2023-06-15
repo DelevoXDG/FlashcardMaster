@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import (
     QAbstractItemView,
     QMessageBox,
     QPushButton,
+    QFileDialog,
 )
 from PyQt6.QtCore import (
     QSize,
@@ -29,6 +30,7 @@ from . import (
     DeckWidget,
     PlaylistWidget,
 )
+from .decks_parser import DeckParser
 
 from .tests import sample_db_data as dbtest
 
@@ -87,6 +89,8 @@ class MainWindow(QMainWindow):
         self.create_playlist_button.clicked.connect(self.create_playlist)
         self.view.doubleClicked.connect(self.open_selected_deck_widget)
         self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
+        self.import_button.clicked.connect(self.import_decks)
+        self.export_button.clicked.connect(self.export_decks)
 
     def refresh_model_and_view(self):
         """Refresh the table view and the model - called after any changes to the records in the model"""
@@ -143,10 +147,7 @@ class MainWindow(QMainWindow):
             self.selection_model.hasSelection()
             and len(self.selection_model.selectedRows()) >= 2
         )
-        self.export_button.setEnabled(
-            self.selection_model.hasSelection()
-            and len(self.selection_model.selectedRows()) == 1
-        )
+        self.export_button.setEnabled(self.selection_model.hasSelection())
 
     def add_deck(self):
         """Add a new empty deck with default title to the database and open related widget in a new window"""
@@ -197,9 +198,61 @@ class MainWindow(QMainWindow):
 
         if not selected_deck_rows:
             return
-
+        # playlist_widget = PlaylistWidget(decks, parent=self)
         selected_decks = [self.model.results[row.row()] for row in selected_deck_rows]
         selected_deck_ids = [deck.id for deck in selected_decks]
 
         playlist_widget = PlaylistWidget(selected_deck_ids, parent=self)
         playlist_widget.show()
+
+    def export_decks(self):
+        selected_deck_rows = self.selection_model.selectedRows()
+
+        if not selected_deck_rows:
+            return
+
+        selected_decks = [self.model.results[row.row()] for row in selected_deck_rows]
+
+        file_dialog = QFileDialog()
+        file_path, _ = file_dialog.getSaveFileName(
+            self, "Save as", "", "JSON files (*.json)"
+        )
+
+        if file_path:
+            try:
+                with open(file_path, "w") as file:
+                    decks_parser = DeckParser()
+                    file.write(decks_parser.export_decks(selected_decks))
+                QMessageBox.information(
+                    self, "Success", "JSON file saved successfully."
+                )
+            except Exception as e:
+                QMessageBox.critical(
+                    self, "Error", "An error occured while saving the file."
+                )
+                log.error(f"Error while opening the file: {e}")
+        else:
+            # QMessageBox.warning(self, "Ostrzeżenie", "Nie wybrano lokalizacji pliku.")
+            log.warning("File path not selected.")
+
+    def import_decks(self):
+        file_dialog = QFileDialog()
+        file_path, _ = file_dialog.getOpenFileName(
+            self, "Open file", "", "JSON files (*.json)"
+        )
+
+        if file_path:
+            try:
+                with open(file_path, "r") as file:
+                    content = file.read()
+                    decks_parser = DeckParser()
+                    decks_parser.import_decks(content)
+                    self.refresh_model_and_view()
+            except Exception as e:
+                QMessageBox.critical(
+                    self, "Error", "An error occured while opening the file."
+                )
+                log.error(f"Error while opening the file: {e}")
+        else:
+            # QMessageBox.warning(self, "Ostrzeżenie", "Nie wybrano pliku.")
+            log.warning("File path not selected.")
