@@ -3,8 +3,9 @@ from .. import (
     Deck,
     Flashcard,
     Category,
+    FlashcardAnswer,
 )
-
+import sqlalchemy
 import logging
 
 log = logging.getLogger(__name__)
@@ -19,6 +20,29 @@ def print_all_flashcards():
     for flashcard in flashcards:
         print(flashcard)
         # log.debug(flashcard)
+
+    session.remove()
+
+
+def print_correct_answers():
+    """Prints the number of correct answers for each flashcard ID"""
+    session = get_scoped_session()
+
+    # Join Flashcard and FlashcardAnswer tables to get the correct answers count
+    query = (
+        session.query(
+            Flashcard.id,
+            sqlalchemy.func.count(FlashcardAnswer.id).label("correct_answers"),
+        )
+        .join(FlashcardAnswer, Flashcard.id == FlashcardAnswer.Flashcard_id)
+        .filter(FlashcardAnswer.is_correct == True)
+        .group_by(Flashcard.id)
+    )
+
+    result = query.all()
+
+    for flashcard_id, correct_answers in result:
+        print(f"Flashcard ID: {flashcard_id}, Correct Answers: {correct_answers}")
 
     session.remove()
 
