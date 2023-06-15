@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QVBoxLayout,
-    QLabel,
+    QLabel, QMessageBox,
 )
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt
@@ -38,6 +38,8 @@ class StudyWidget(QWidget):
 
         self.correct_button.clicked.connect(self.correct_button_action)
         self.wrong_button.clicked.connect(self.wrong_button_action)
+        self.flip_button.clicked.connect(self.show_buttons)
+        self.flip_button.clicked.connect(self.flip)
 
         self.load_next_flashcard()
 
@@ -58,8 +60,6 @@ class StudyWidget(QWidget):
             flashcard_widget = FlashcardWidget(flashcard)
             # flip_button: QPushButton = flashcard_widget.flip_button
             # flip_button.clicked.connect(self.show_buttons)
-            self.flip_button.clicked.connect(self.show_buttons)
-            self.flip_button.clicked.connect(self.flip)
 
             layout: QVBoxLayout = self.layout
             placeholder: QWidget = self.flashcard_widget
@@ -68,13 +68,19 @@ class StudyWidget(QWidget):
             self.flashcard_widget = flashcard_widget
             placeholder.deleteLater()
         else:
-            label = QLabel("Nothing left")
-            label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            layout: QVBoxLayout = self.layout
-            placeholder: QWidget = self.flashcard_widget
-            layout.replaceWidget(placeholder, label)
-            self.flashcard_widget = label
-            placeholder.deleteLater()
+            if not len(self.playlist):
+                QMessageBox.information(
+                    self, "Information", "You finished"
+                )
+                self.close()
+                return
+            # label = QLabel("Nothing left")
+            # label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            # layout: QVBoxLayout = self.layout
+            # placeholder: QWidget = self.flashcard_widget
+            # layout.replaceWidget(placeholder, label)
+            # self.flashcard_widget = label
+            # placeholder.deleteLater()
 
     def handle_visibility_button(self):
         upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -88,10 +94,6 @@ class StudyWidget(QWidget):
     def flip(self):
         self.flipped = not self.flipped
         self.handle_visibility_button()
-
-        if not len(self.playlist):
-            self.close()
-            return
 
         self.flashcard_widget.answer_widget.flip()
 
