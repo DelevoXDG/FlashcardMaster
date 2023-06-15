@@ -1,3 +1,4 @@
+from app.modules import enums
 from .answer_widget import (
     AnswerWidget,
     TextAnswerWidget,
@@ -16,9 +17,9 @@ class AnswerWidgetFactory:
 
     @staticmethod
     def getCorrectAnswerWidgetFactory(flashcard):
-        if flashcard.card_type == 0:
+        if flashcard.card_type == enums.CardType.Text:
             return TextAnswerWidgetFactory()
-        elif flashcard.card_type == 1:
+        elif flashcard.card_type == enums.CardType.TrueFalse:
             return TrueFalseAnswerWidgetFactory()
         else:
             return MultipleChoiceAnswerWidgetFactory()
