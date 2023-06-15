@@ -93,9 +93,6 @@
      <bold>false</bold>
     </font>
    </property>
-   <property name="toolTip">
-    <string>Show answer</string>
-   </property>
    <property name="text">
     <string/>
    </property>
