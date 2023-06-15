@@ -102,10 +102,7 @@ class MainWindow(QMainWindow):
         for i in range(0, self.model.columnCount()):
             hh.setSectionResizeMode(i, QHeaderView.ResizeMode.ResizeToContents)
         hh.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
-        self.view.setColumnWidth(2, 100)
-        self.view.setColumnWidth(4, 70)
-        if self.model.columnCount() == 6:
-            self.view.setColumnWidth(5, 70)
+        # self.view.setColumnWidth(2, 100)
         hh.setMinimumHeight(30)
 
         bold_font = hh.font()
