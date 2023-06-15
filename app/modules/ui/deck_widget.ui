@@ -38,14 +38,14 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="toolTip">
-    <string>Add deck of flashcards</string>
+    <string>Add flashcard to the deck</string>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../assets/add.png</normaloff>../../assets/add.png</iconset>
+     <normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/add.png</normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/add.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -67,14 +67,14 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="toolTip">
-    <string>Delete deck from the collection</string>
+    <string>Delete flashcard from the deck</string>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../assets/minus.png</normaloff>../../assets/minus.png</iconset>
+     <normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/minus.png</normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/minus.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -94,12 +94,13 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
+     <pointsize>-1</pointsize>
     </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QLineEdit {
 padding-left: 8px;
+font-size: 16px;
 }</string>
    </property>
    <property name="placeholderText">
@@ -117,12 +118,16 @@ padding-left: 8px;
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
+     <pointsize>-1</pointsize>
     </font>
+   </property>
+   <property name="toolTip">
+    <string>Select category</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QComboBox {
 padding-left: 8px;
+font-size: 16px;
 }</string>
    </property>
    <property name="placeholderText">
@@ -153,17 +158,20 @@ padding-left: 8px;
      <height>40</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Save changes</string>
+   </property>
    <property name="text">
     <string/>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../assets/save.png</normaloff>../../assets/save.png</iconset>
+     <normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/save.png</normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/save.png</iconset>
    </property>
    <property name="iconSize">
     <size>
-     <width>22</width>
-     <height>22</height>
+     <width>24</width>
+     <height>24</height>
     </size>
    </property>
   </widget>
