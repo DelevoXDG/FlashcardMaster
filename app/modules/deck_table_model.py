@@ -9,6 +9,7 @@ from . import (
 from .alchemical_model import AlchemicalTableModel
 
 from PyQt6.QtCore import (
+    QModelIndex,
     QVariant,
     Qt,
 )
@@ -26,6 +27,7 @@ class DeckTableModel(AlchemicalTableModel):
             "title": {"display_name": "Title", "flags": {"editable": False}},
             "Category_id": {"display_name": "Category", "flags": {}},
             "id": {"display_name": "№", "flags": {"editable": False}},
+            "flashcards_count": {"display_name": "Count", "flags": {"editable": False}},
         }
 
         cols = [
@@ -34,6 +36,9 @@ class DeckTableModel(AlchemicalTableModel):
             )
             for alchemy_col in Deck.__table__.columns
         ]
+        cols.append(
+            AlchemizedColumn(column=None, column_name="flashcards_count", flags=dict())
+        )
 
         for col in cols:
             for name, extra_properties in col_extra_properties.items():
@@ -54,6 +59,14 @@ class DeckTableModel(AlchemicalTableModel):
         if title == self.column_name_w_foreign_key:
             # Get the category name instead of category_id
             value = row.Category.name if row.Category else ""
+        elif title == "flashcards_count":
+            deck_id = getattr(row, "id")
+            flashcards_count = (
+                self.session.query(Flashcard)
+                .filter(Flashcard.Deck_id == deck_id)
+                .count()
+            )
+            value = str(flashcards_count)
         else:
             value = str(getattr(row, title))
 
@@ -92,3 +105,6 @@ class DeckTableModel(AlchemicalTableModel):
         self.refresh()
 
         return new_deck
+
+    def columnCount(self, parent=...):
+        return super().columnCount(parent)

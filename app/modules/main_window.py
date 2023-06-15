@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import (
     QWidget,
     QListView,
     QLabel,
+    QHeaderView,
     QTableView,
     QAbstractItemView,
     QMessageBox,
@@ -74,6 +75,7 @@ class MainWindow(QMainWindow):
         self.merge_button.setEnabled(False)
         self.stats_button.setEnabled(False)
 
+        self.setup_horizontal_header()
         self.model.refresh()
         self.connect_signals()
 
@@ -82,11 +84,11 @@ class MainWindow(QMainWindow):
         self.delete_button.clicked.connect(self.delete_decks)
         self.merge_button.clicked.connect(self.merge_decks)
         self.create_playlist_button.clicked.connect(self.create_playlist)
-        self.view.doubleClicked.connect(self.open_deck_widget)
+        self.view.doubleClicked.connect(self.open_selected_deck_widget)
         self.selection_model.selectionChanged.connect(self.toggle_buttons_selection)
 
-    def refresh_deck_table(self):
-        """Refresh the deck table view - called after any changes to the records in the model"""
+    def refresh_model_and_view(self):
+        """Refresh the table view and the model - called after any changes to the records in the model"""
         # index = self.model.index(deck_row.row(), 1)
         # self.model.dataChanged.emit(index, index)
         # self.model.refresh()
@@ -95,7 +97,25 @@ class MainWindow(QMainWindow):
         self.model.refresh()
         self.view.resizeColumnsToContents()
 
-    def open_deck_widget(self):
+    def setup_horizontal_header(self):
+        hh = self.view.horizontalHeader()
+        for i in range(0, self.model.columnCount()):
+            hh.setSectionResizeMode(i, QHeaderView.ResizeMode.ResizeToContents)
+        hh.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        self.view.setColumnWidth(2, 100)
+        self.view.setColumnWidth(4, 70)
+        if self.model.columnCount() == 6:
+            self.view.setColumnWidth(5, 70)
+        hh.setMinimumHeight(30)
+
+        bold_font = hh.font()
+        bold_font.setBold(True)
+        hh.setFont(bold_font)
+        hh.setHighlightSections(True)
+
+        return hh
+
+    def open_selected_deck_widget(self):
         """Open a widget in a new window with the single selected deck"""
         selected_deck_rows = self.selection_model.selectedRows()
 
@@ -138,7 +158,7 @@ class MainWindow(QMainWindow):
         new_deck.title = new_deck.default_title()
         session.commit()
 
-        self.refresh_deck_table()
+        self.refresh_model_and_view()
 
         deck_widget = DeckWidget(new_deck.id, parent=self)
         deck_widget.show()
@@ -171,7 +191,7 @@ class MainWindow(QMainWindow):
         selected_deck_ids = [deck.id for deck in selected_decks]
         self.model.merge_decks(selected_deck_ids, category_id=category_id)
 
-        self.refresh_deck_table()
+        self.refresh_model_and_view()
 
     def create_playlist(self):
         """Create a new playlist from selected decks and open the playlist widget in a new window"""

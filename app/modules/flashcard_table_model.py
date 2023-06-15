@@ -6,7 +6,10 @@ from . import (
     AlchemizedColumn,
     Flashcard,
 )
-from . import DifficultyLevel
+from .enums import (
+    DifficultyLevel,
+    CardType,
+)
 
 
 from .alchemical_model import AlchemicalTableModel
@@ -32,6 +35,7 @@ class FlashcardTableModel(AlchemicalTableModel):
                 "display_name": "Difficulty",
                 "flags": {"editable": False},
             },
+            "card_type": {"display_name": "Type", "flags": {"editable": False}},
             "id": {"display_name": "№", "flags": {"editable": False}},
         }
 
@@ -77,10 +81,20 @@ class FlashcardTableModel(AlchemicalTableModel):
         title = self.fields[index.column()].column_name
         column = self.fields[index.column()].column
 
-        if title == "difficulty_level":
-            diff_num = int(getattr(row, title))
-            # Get the category name instead of category_id
-            value = DifficultyLevel.get_name(diff_num)
+        if title == "card_type":
+            if getattr(row, title) is None:
+                log.warning("Invalid Flashcard in DB - card_type is NULL")
+                value = "N/A"
+            else:
+                card_type = int(getattr(row, title))
+                value = CardType.get_name(card_type)
+        elif title == "difficulty_level":
+            if getattr(row, title) is None:
+                log.warning("Invalid Flashcard in DB - difficulty level is NULL")
+                value = "N/A"
+            else:
+                diff_num = int(getattr(row, title))
+                value = DifficultyLevel.get_name(diff_num)
         else:
             value = str(getattr(row, title))
 
