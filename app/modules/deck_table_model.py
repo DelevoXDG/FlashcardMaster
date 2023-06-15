@@ -111,58 +111,17 @@ class DeckTableModel(AlchemicalTableModel):
         return super().columnCount(parent)
 
     def refresh(self):
-        # if query is not None:
-        # self.query = query
-        # else:
-        # session = get_scoped_session()
-        # session = self.session
-        # self.query = session.query(self.db_object_model)
-        session = self.session
+        """Refreshes the table, including support for sorting count column"""
 
-        """Recalculates self.results and self.count"""
         log.info("Refreshing the table")
         self.layoutAboutToBeChanged.emit()
         query = self.query
         alch_col = None
         if self._sort_column is not None:
-            # order, column = self.sort
-            # alchemical_col = self._sort_column
             alchemized_col = self.fields[self._sort_column]
             col_name = alchemized_col.column_name
             order = self._sort_order
-            # if col_name == "flashcards_count":
-            #     # subquery = (
-            #     #     session.query(
-            #     #         Flashcard.Deck_id,
-            #     #         sqlalchemy.func.count(Flashcard.id).label("flashcards_count"),
-            #     #     )
-            #     #     .group_by(Flashcard.Deck_id)
-            #     #     .subquery()
-            #     # )
-            #     # alch_col = sqlalchemy.case(
-            #     #     (subquery.c.Deck_id.is_(None), 0), else_=subquery.c.flashcards_count
-            #     # )
-            #     # # alch_col = alchemized_col.column
-            #     # if order == Qt.SortOrder.DescendingOrder:
-            #     #     alch_col = alch_col.desc()
-            #     # else:
-            #     #     alch_col = alch_col.asc()
-            # else:
-            #     alch_col = alchemized_col.column
-            #     if order == Qt.SortOrder.DescendingOrder:
-            #         alch_col = alch_col.desc()
-            #     else:
-            #         alch_col = alch_col.asc()
 
-            # if col_name == "flashcards_count":
-            #     alch_col = sqlalchemy.func.count(Flashcard.id)
-            # else:
-            #     alch_col = alchemized_col.column
-
-            # if order == Qt.SortOrder.DescendingOrder:
-            #     alch_col = alch_col.desc()
-            # else:
-            #     alch_col = alch_col.asc()
             if col_name == "flashcards_count":
                 flashcards_count = sqlalchemy.func.count(Flashcard.id).label(
                     "flashcards_count"

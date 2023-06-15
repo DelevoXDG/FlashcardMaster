@@ -7,13 +7,19 @@ from . import (
     get_universal_session,
     FlashcardAnswer,
 )
+from .enums import (
+    DifficultyLevel,
+    StudyType,
+)
+
+import random
 
 
 class Playlist:
     # Define difficulty levels
     difficulties = {
-        "Easy": [0, 1, 2],
-        "Hard": [2, 1, 0],
+        "Easy": [DifficultyLevel.Easy, DifficultyLevel.Medium, DifficultyLevel.Hard],
+        "Hard": [DifficultyLevel.Hard, DifficultyLevel.Medium, DifficultyLevel.Easy],
     }
 
     def __init__(self, deck_ids, difficulty=None, study_type=None):
@@ -26,13 +32,56 @@ class Playlist:
             self.session.query(Flashcard).filter(Flashcard.Deck_id.in_(deck_ids)).all()
         )
 
-        # Sort flashcards by given difficulty level
+        self.sort_flascalrds(flashcards, difficulty, study_type)
+
+        self.flashcard_queue.extend(flashcards)
+        self.cur_card = None
+
+    def sort_flascalrds(self, flashcards, difficulty, study_type):
+        random.shuffle(flashcards)
         if difficulty in self.difficulties:
             order = self.difficulties[difficulty]
             flashcards.sort(key=lambda x: order.index(x.difficulty_level))
 
-        self.flashcard_queue.extend(flashcards)
-        self.cur_card = None
+        # if study_type == StudyType.Learn:
+        #     flashcards.sort(
+        #         key=lambda x: (
+        #             1
+        #             if x.FlashcardAnswers
+        #             and any(answer.is_correct for answer in x.FlashcardAnswers)
+        #             else 0,
+        #             self.difficulties[difficulty].index(x.difficulty_level)
+        #             if difficulty in self.difficulties
+        #             else 0,
+        #         )
+        #     )
+        # elif study_type == StudyType.Review:
+        #     flashcards.sort(
+        #         key=lambda x: (
+        #             0
+        #             if x.FlashcardAnswers
+        #             and any(answer.is_correct for answer in x.FlashcardAnswers)
+        #             else 1,
+        #             self.difficulties[difficulty].index(x.difficulty_level)
+        #             if difficulty in self.difficulties
+        #             else 0,
+        #         )
+        #     )
+        if study_type == StudyType.Learn:
+            reverse = False
+        elif study_type == StudyType.Review:
+            reverse = True
+        else:
+            return
+        flashcards.sort(
+            key=lambda x: (
+                sum(1 for answer in x.FlashcardAnswers if answer.is_correct),
+                self.difficulties[difficulty].index(x.difficulty_level)
+                if difficulty in self.difficulties
+                else 0,
+            ),
+            reverse=reverse,
+        )
 
     def next(self):
         if self.has_next():
