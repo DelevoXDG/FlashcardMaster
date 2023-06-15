@@ -135,7 +135,6 @@ class MainWindow(QMainWindow):
         )
         self.export_button.setEnabled(
             self.selection_model.hasSelection()
-            and len(self.selection_model.selectedRows()) == 1
         )
 
     def add_deck(self):
