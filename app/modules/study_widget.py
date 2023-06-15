@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QVBoxLayout,
-    QLabel,
+    QLabel, QMessageBox,
 )
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt
@@ -69,15 +69,18 @@ class StudyWidget(QWidget):
             placeholder.deleteLater()
         else:
             if not len(self.playlist):
+                QMessageBox.information(
+                    self, "Information", "You finished"
+                )
                 self.close()
                 return
-            label = QLabel("Nothing left")
-            label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            layout: QVBoxLayout = self.layout
-            placeholder: QWidget = self.flashcard_widget
-            layout.replaceWidget(placeholder, label)
-            self.flashcard_widget = label
-            placeholder.deleteLater()
+            # label = QLabel("Nothing left")
+            # label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            # layout: QVBoxLayout = self.layout
+            # placeholder: QWidget = self.flashcard_widget
+            # layout.replaceWidget(placeholder, label)
+            # self.flashcard_widget = label
+            # placeholder.deleteLater()
 
     def handle_visibility_button(self):
         upper_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
