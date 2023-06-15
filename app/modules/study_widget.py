@@ -68,6 +68,9 @@ class StudyWidget(QWidget):
             self.flashcard_widget = flashcard_widget
             placeholder.deleteLater()
         else:
+            if not len(self.playlist):
+                self.close()
+                return
             label = QLabel("Nothing left")
             label.setAlignment(Qt.AlignmentFlag.AlignCenter)
             layout: QVBoxLayout = self.layout
@@ -88,10 +91,6 @@ class StudyWidget(QWidget):
     def flip(self):
         self.flipped = not self.flipped
         self.handle_visibility_button()
-
-        if not len(self.playlist):
-            self.close()
-            return
 
         self.flashcard_widget.answer_widget.flip()
 
