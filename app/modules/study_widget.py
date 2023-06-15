@@ -38,6 +38,8 @@ class StudyWidget(QWidget):
 
         self.correct_button.clicked.connect(self.correct_button_action)
         self.wrong_button.clicked.connect(self.wrong_button_action)
+        self.flip_button.clicked.connect(self.show_buttons)
+        self.flip_button.clicked.connect(self.flip)
 
         self.load_next_flashcard()
 
@@ -58,8 +60,6 @@ class StudyWidget(QWidget):
             flashcard_widget = FlashcardWidget(flashcard)
             # flip_button: QPushButton = flashcard_widget.flip_button
             # flip_button.clicked.connect(self.show_buttons)
-            self.flip_button.clicked.connect(self.show_buttons)
-            self.flip_button.clicked.connect(self.flip)
 
             layout: QVBoxLayout = self.layout
             placeholder: QWidget = self.flashcard_widget
