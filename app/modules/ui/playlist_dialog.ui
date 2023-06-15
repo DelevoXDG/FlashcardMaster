@@ -25,9 +25,14 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="title">
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
-         <string notr="true">font-weight: bold;
-font-size: 24px;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Study Playlist Creation</string>
@@ -48,8 +53,13 @@ font-size: 24px;</string>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QLabel" name="difficulty_appeal">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">font-size: 16px;</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Choose the level of difficulty:</string>
@@ -58,10 +68,14 @@ font-size: 24px;</string>
          </item>
          <item>
           <widget class="QComboBox" name="difficulty_choice">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QComboBox {
 padding-left: 8px;
-font-size: 14px;
 }</string>
            </property>
            <item>
@@ -95,8 +109,13 @@ font-size: 14px;
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QLabel" name="study_type_appeal">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">font-size: 16px;</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Choose the study type:</string>
@@ -105,10 +124,14 @@ font-size: 14px;
          </item>
          <item>
           <widget class="QComboBox" name="study_type_choice">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QComboBox {
 padding-left: 8px;
-font-size: 14px;
 }</string>
            </property>
            <item>
@@ -135,6 +158,11 @@ font-size: 14px;
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="flip_mode_button">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -142,8 +170,8 @@ font-size: 14px;
            <string>Start studying in Flip Mode</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton {
-font-size: 16px;
+           <string notr="true">QPushButton:hover {
+background-color: rgba(165, 165, 165, 30)
 }</string>
           </property>
           <property name="text">
@@ -163,6 +191,11 @@ font-size: 16px;
         </item>
         <item>
          <widget class="QPushButton" name="quiz_mode_button">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
@@ -170,8 +203,8 @@ font-size: 16px;
            <string>Start studying in Quiz Mode</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton {
-font-size: 16px;
+           <string notr="true">QPushButton:hover {
+background-color: rgba(165, 165, 165, 30)
 }</string>
           </property>
           <property name="text">

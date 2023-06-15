@@ -1,5 +1,7 @@
 from collections import OrderedDict
+
 import os
+
 from PyQt6.QtWidgets import (
     QWidget,
     QTableView,
@@ -8,16 +10,20 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QComboBox,
     QInputDialog,
+    QMessageBox,
 )
+
 from PyQt6.QtCore import QSize, QItemSelectionModel, Qt
 
 from PyQt6 import uic
+
 import sqlalchemy
 
 from .enums import (
     CardType,
     DifficultyLevel,
 )
+
 from . import (
     Deck,
     Flashcard,
@@ -93,6 +99,7 @@ class DeckWidget(QWidget):
         self.name_line.textChanged.connect(self.enable_save_button)
         self.category_combo_box.currentIndexChanged.connect(self.enable_save_button)
         self.category_combo_box.currentIndexChanged.connect(self.handle_category_change)
+        self.view.doubleClicked.connect(self.open_selected_card_widget)
 
         self.add_button.clicked.connect(self.add_flashcard)
         self.delete_button.clicked.connect(self.delete_selected_flashcards)
@@ -299,19 +306,44 @@ class DeckWidget(QWidget):
 
     def add_flashcard(self):
         """Add a new empty flashcard with default title to the database and open related widget in a new window"""
+
         session = (
             self.model.session if self.model is not None else get_universal_session()
         )
+
         new_flashcard = Flashcard(
             Deck_id=self.deck.id,
             card_type=CardType.Text,
             difficulty_level=DifficultyLevel.Medium,
         )
+
         session.add(new_flashcard)
         session.commit()
         self.refresh_model_and_view()
 
-        flashcard_editor_widget = FlashcardEditorWidget(new_flashcard, parent=self)
+        flashcard_editor_widget = FlashcardEditorWidget(new_flashcard, True, parent=self)
+        flashcard_editor_widget.show()
+
+    def open_selected_card_widget(self):
+        """Open a widget in a new window with the single selected deck"""
+        selected_card_rows = self.selection_model.selectedRows()
+
+        if not selected_card_rows:
+            return
+        if len(selected_card_rows) != 1:
+            return
+
+        clicked_row = selected_card_rows[0]
+        selected_card = self.model.results[clicked_row.row()]
+
+        if selected_card is None:
+            log.error("Selected Flashcard is None")
+            QMessageBox.critical(
+                self, "Error", "Selected Flashcard not found in the database."
+            )
+            return
+
+        flashcard_editor_widget = FlashcardEditorWidget(selected_card, False, parent=self)
         flashcard_editor_widget.show()
 
     def delete_selected_flashcards(self):

@@ -25,9 +25,14 @@
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <widget class="QLabel" name="title">
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
-         <string notr="true">font-weight: bold;
-font-size: 24px;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Flashcard Editor</string>
@@ -48,8 +53,13 @@ font-size: 24px;</string>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QLabel" name="card_type_appeal">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">font-size: 16px;</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Choose the type of card*:</string>
@@ -58,17 +68,15 @@ font-size: 24px;</string>
          </item>
          <item>
           <widget class="QComboBox" name="card_type_choice">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QComboBox {
 padding-left: 8px;
-font-size: 14px;
 }</string>
-           </property>
-           <property name="currentIndex">
-            <number>-1</number>
-           </property>
-           <property name="placeholderText">
-            <string>Type of card</string>
            </property>
            <item>
             <property name="text">
@@ -101,8 +109,13 @@ font-size: 14px;
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QLabel" name="question_appeal">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">font-size: 16px;</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Enter a question*:</string>
@@ -111,10 +124,14 @@ font-size: 14px;
          </item>
          <item>
           <widget class="QLineEdit" name="question_writing">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 padding-left: 8px;
-font-size: 14px;
 }</string>
            </property>
            <property name="placeholderText">
@@ -136,8 +153,13 @@ font-size: 14px;
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <widget class="QLabel" name="answer_appeal">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">font-size: 16px;</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Write an answer*:</string>
@@ -146,10 +168,14 @@ font-size: 14px;
          </item>
          <item>
           <widget class="QLineEdit" name="answer_writing">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 padding-left: 8px;
-font-size: 14px;
 }</string>
            </property>
            <property name="placeholderText">
@@ -171,8 +197,13 @@ font-size: 14px;
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QLabel" name="difficulty_appeal">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">font-size: 16px;</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Choose the level of difficulty*:</string>
@@ -181,17 +212,15 @@ font-size: 14px;
          </item>
          <item>
           <widget class="QComboBox" name="difficulty_choice">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QComboBox {
 padding-left: 8px;
-font-size: 14px;
 }</string>
-           </property>
-           <property name="currentIndex">
-            <number>-1</number>
-           </property>
-           <property name="placeholderText">
-            <string>Level of difficulty</string>
            </property>
            <item>
             <property name="text">
@@ -214,19 +243,26 @@ font-size: 14px;
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="add_card_button">
+       <widget class="QPushButton" name="save_button">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
         <property name="toolTip">
-         <string>Add Flashcard</string>
+         <string>Save changes</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">QPushButton:hover {
+background-color: rgba(165, 165, 165, 30)
+}</string>
         </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../assets/save.png</normaloff>../../assets/save.png</iconset>
+          <normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/save.png</normaloff>../../../../../Inżynieria oprogramowania/io_project/app/assets/save.png</iconset>
         </property>
         <property name="iconSize">
          <size>

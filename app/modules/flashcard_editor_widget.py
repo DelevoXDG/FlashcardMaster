@@ -11,9 +11,11 @@ from .enums import (
 
 
 class FlashcardEditorWidget(QtWidgets.QDialog):
-    def __init__(self, flashcard, parent=None):
+    def __init__(self, flashcard, newCard, parent=None):
         super().__init__(parent)
         self.flashcard = flashcard
+        self.newCard = newCard
+        self.saved = False
         self.load_ui()
 
     def load_ui(self):
@@ -25,27 +27,19 @@ class FlashcardEditorWidget(QtWidgets.QDialog):
         self.question_writing: QtWidgets.QLineEdit = self.question_writing
         self.answer_writing: QtWidgets.QLineEdit = self.answer_writing
         self.difficulty_choice: QtWidgets.QComboBox = self.difficulty_choice
-        self.add_card_button: QtWidgets.QPushButton = self.add_card_button
-        self.add_card_button.setEnabled(False)
+        self.save_button: QtWidgets.QPushButton = self.save_button
+        self.save_button.setEnabled(False)
 
         # Fill the form with the current flashcard's data
-        # self.card_type_choice.setCurrentText(
-        #     CardType.get_name(self.flashcard.card_type)
-        # )
-        self.card_type_choice.setCurrentIndex(CardType.Text)
-
+        self.card_type_choice.setCurrentIndex(self.flashcard.card_type)
         self.question_writing.setText(self.flashcard.question)
         self.answer_writing.setText(self.flashcard.answer)
-        print(DifficultyLevel.get_name(self.flashcard.difficulty_level))
-        # self.difficulty_choice.setCurrentText(
-        #     DifficultyLevel.get_name(self.flashcard.difficulty_level)
-        # )
-        self.difficulty_choice.setCurrentIndex(DifficultyLevel.Medium)
+        self.difficulty_choice.setCurrentIndex(self.flashcard.difficulty_level)
 
         self.setup_connections()
 
     def setup_connections(self):
-        self.add_card_button.clicked.connect(self.update_flashcard)
+        self.save_button.clicked.connect(self.update_flashcard)
 
         # Connect textChanged signals from input fields to the enable_button method
         self.card_type_choice.currentIndexChanged.connect(self.enable_button)
@@ -62,28 +56,28 @@ class FlashcardEditorWidget(QtWidgets.QDialog):
                 self.difficulty_choice.currentText(),
             ]
         ):
-            self.add_card_button.setEnabled(True)
+            self.save_button.setEnabled(True)
         else:
-            self.add_card_button.setEnabled(False)
+            self.save_button.setEnabled(False)
 
     def update_flashcard(self):
-        session = get_universal_session()  # or another way you obtain the session
+        session = get_universal_session()
 
         self.flashcard.card_type = self.card_type_choice.currentIndex()
-
         self.flashcard.question = self.question_writing.text()
         self.flashcard.answer = self.answer_writing.text()
         self.flashcard.difficulty_level = self.difficulty_choice.currentIndex()
 
         session.commit()
 
-        # Close the dialog after saving the flashcard
+        self.saved = True
         self.close()
 
     def closeEvent(self, event):
-        session = get_universal_session()
-        session.delete(self.flashcard)
-        session.commit()
+        if not self.saved and self.newCard:
+            session = get_universal_session()
+            session.delete(self.flashcard)
+            session.commit()
 
         if (
             self.parent() is not None
