@@ -28,6 +28,9 @@ from . import (
 from .enums import StudyType
 from .playlist import Playlist
 
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+
 
 class PlaylistWidget(QDialog):
     def __init__(self, deck_ids, parent=None):
