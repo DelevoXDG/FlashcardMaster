@@ -33,10 +33,20 @@ class DeckParser:
             session.commit()
         # pass
 
+    #Private method
+    def __export_flashcard(self, flashcard: Flashcard):
+        dict = flashcard.as_dict()
+        del dict["id"]
+        del dict["Deck_id"]
+        return dict
+
+
     def export_deck(self, deck: Deck) -> str:
         dict = deck.as_dict()
+        del dict["id"] #usuwam id
+        del dict["Category_id"] #usuwam category
         dict["Flashcards"] = deck.Flashcards
-        deck_json = json.dumps(dict, default=lambda o: o.as_dict())
+        deck_json = json.dumps(dict, default=lambda o: self.export_flashcard(o))
         return deck_json
 
 
