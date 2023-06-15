@@ -1,7 +1,7 @@
 # from app.modules.database_models import Deck
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 
-from database_models import (
+from modules.database_models import (
     Deck,
     get_session,
     Flashcard,

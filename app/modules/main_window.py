@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
     QTableView,
     QAbstractItemView,
     QMessageBox,
-    QPushButton,
+    QPushButton, QFileDialog,
 )
 from PyQt6.QtCore import (
     QSize,
@@ -28,6 +28,7 @@ from . import (
     DeckWidget,
     PlaylistWidget,
 )
+from .decks_parser import DeckParser
 
 from .tests import sample_db_data as dbtest
 
@@ -74,6 +75,7 @@ class MainWindow(QMainWindow):
         self.merge_button.clicked.connect(self.merge_playlists)
         self.create_playlist_button.clicked.connect(self.create_playlist)
         self.view.doubleClicked.connect(self.open_deck_widget)
+        self.export_button.clicked.connect(self.export_deck)
 
         self.delete_button.setEnabled(False)
         self.create_playlist_button.setEnabled(False)
@@ -206,3 +208,26 @@ class MainWindow(QMainWindow):
         if not selected_deck_rows:
             return
         playlist_widget = PlaylistWidget(decks, parent=self)
+
+    def export_deck(self):
+        selected_deck_rows = self.selection_model.selectedRows()
+
+        if not selected_deck_rows:
+            return
+
+        selected_decks = [self.model.results[row.row()] for row in selected_deck_rows]
+
+        file_dialog = QFileDialog()
+        file_path, _ = file_dialog.getSaveFileName(self, 'Zapisz jako', '', 'Pliki JSON (*.json)')
+
+        if file_path:
+            try:
+                with open(file_path, 'w') as file:
+                    decks_parser = DeckParser()
+                    file.write(decks_parser.export_decks(selected_decks))
+                QMessageBox.information(self, 'Sukces', 'Plik JSON został zapisany.')
+            except Exception as e:
+                QMessageBox.critical(self, 'Błąd', f'Wystąpił błąd podczas zapisywania pliku: {str(e)}')
+        else:
+            QMessageBox.warning(self, 'Ostrzeżenie', 'Nie wybrano lokalizacji pliku.')
+
