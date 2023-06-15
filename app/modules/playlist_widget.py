@@ -28,6 +28,8 @@ from . import (
 from .enums import StudyType
 from .playlist import Playlist
 
+import logging
+
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
