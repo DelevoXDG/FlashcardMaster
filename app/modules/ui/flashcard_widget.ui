@@ -70,7 +70,13 @@
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="answer_widget" native="true"/>
+     <widget class="QWidget" name="answer_widget" native="true">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
