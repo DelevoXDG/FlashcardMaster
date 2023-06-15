@@ -3,7 +3,7 @@ from .. import (
     Deck,
     Flashcard,
     Category,
-    FlashcardAnswer,
+    FlashcardAnswer, enums,
 )
 import sqlalchemy
 import logging
@@ -98,21 +98,21 @@ def add_sample_flashcards():
 
     # Create and add sample flashcards for the Mathematics deck
     flashcard1 = Flashcard(
-        card_type=1,
+        card_type=enums.CardType.Text,
         question="What is 2 + 2?",
         answer="4",
         difficulty_level=1,
         Deck=mathematics_deck,
     )
     flashcard2 = Flashcard(
-        card_type=1,
+        card_type=enums.CardType.Text,
         question="What is the square root of 16?",
         answer="4",
         difficulty_level=2,
         Deck=mathematics_deck,
     )
     flashcard3 = Flashcard(
-        card_type=1,
+        card_type=enums.CardType.Text,
         question="What is 5 x 5?",
         answer="25",
         difficulty_level=1,
@@ -125,21 +125,21 @@ def add_sample_flashcards():
 
     # Create and add sample flashcards for the History deck
     flashcard4 = Flashcard(
-        card_type=1,
+        card_type=enums.CardType.Text,
         question="Who was the first President of the United States?",
         answer="George Washington",
         difficulty_level=2,
         Deck=history_deck,
     )
     flashcard5 = Flashcard(
-        card_type=1,
+        card_type=enums.CardType.Text,
         question="In which year did World War II end?",
         answer="1945",
         difficulty_level=0,
         Deck=history_deck,
     )
     flashcard6 = Flashcard(
-        card_type=1,
+        card_type=enums.CardType.Text,
         question="Who painted the Mona Lisa?",
         answer="Leonardo da Vinci",
         difficulty_level=1,
