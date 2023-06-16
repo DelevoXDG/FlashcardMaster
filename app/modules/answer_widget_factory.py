@@ -1,4 +1,4 @@
-from app.modules import enums
+from . import enums
 from .answer_widget import (
     AnswerWidget,
     TextAnswerWidget,

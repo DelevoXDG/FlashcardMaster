@@ -1,13 +1,14 @@
 # from app.modules.database_models import Deck
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 
-from modules.database_models import (
+from .database_models import (
     Deck,
     get_universal_session,
     Flashcard,
 )
-
+import re
 import json
+
 from typing import List
 
 # from app.modules.database_models import get_universal_session
@@ -66,14 +67,39 @@ class DeckParser:
         )
         return decks_json
 
+    @staticmethod
+    def is_valid_json_dict(text):
+        pattern = r'^\{\s*("[^"]*"\s*:\s*[01]\s*(?:,\s*|\s*\}\s*))*$'
+        return re.match(pattern, text) is not None
+
 
 if __name__ == "__main__":
-    session = get_universal_session()
-    deck1 = session.query(Deck).get(51)
-    deck2 = session.query(Deck).get(66)
-    deck_parser = DeckParser()
-    exported_data = deck_parser.export_decks([deck1, deck2])
-    print(exported_data)
-    deck_parser.import_decks(exported_data)
-    # deck_parser.export_decks([deck])
-    # deck_parser.import_deck(json.loads(exported_data))
+    # Test examples
+    correct_text1 = '{"HL": 0, "PL":0, "DmDo": 1}'
+    correct_text2 = '{"Medium": 0, "Big": 0, "Small": 1}'
+    incorrect_text1 = '{"HL: 0, "PL": 0, "DmDo": 1}'
+    incorrect_text2 = '{"HL": 0", "PL": 0, "DmDo": 1'
+    incorrect_text3 = '{"HL": 0, "PL", "DmDo": 1}'
+    incorrect_text4 = '{"HL": 0, "PL"0, "DmDo": 1}'
+    incorrect_text5 = '{"HL": 0, "PL":: 1}'
+
+    print(DeckParser.is_valid_json_dict(correct_text1))  # True
+    print(DeckParser.is_valid_json_dict(correct_text2))  # True
+    print(DeckParser.is_valid_json_dict(incorrect_text1))  # False
+    print(DeckParser.is_valid_json_dict(incorrect_text2))  # False
+    print(DeckParser.is_valid_json_dict(incorrect_text3))  # False
+    print(DeckParser.is_valid_json_dict(incorrect_text4))  # False
+    print(DeckParser.is_valid_json_dict(incorrect_text5))  # False
+
+# if __name__ == "__main__":
+
+
+#     session = get_universal_session()
+#     deck1 = session.query(Deck).get(51)
+#     deck2 = session.query(Deck).get(66)
+#     deck_parser = DeckParser()
+#     exported_data = deck_parser.export_decks([deck1, deck2])
+#     print(exported_data)
+#     deck_parser.import_decks(exported_data)
+#     # deck_parser.export_decks([deck])
+#     # deck_parser.import_deck(json.loads(exported_data))
