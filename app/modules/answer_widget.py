@@ -27,6 +27,8 @@ class TextAnswerWidget(AnswerWidget):
         layout = QVBoxLayout()
 
         self.text_answer_label = QLabel(self.hidden_answer_text)
+        self.text_answer_label.setStyleSheet("font-size: 16px")
+
         self.text_answer_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.text_answer_label.setAlignment(Qt.AlignmentFlag.AlignTop)
         layout.addWidget(self.text_answer_label)
@@ -50,7 +52,10 @@ class TrueFalseAnswerWidget(AnswerWidget):
         layout = QVBoxLayout()
 
         self.answer_true_label = QLabel("True")
+        self.answer_true_label.setStyleSheet("font-size: 16px")
+
         self.answer_false_label = QLabel("False")
+        self.answer_false_label.setStyleSheet("font-size: 16px")
 
         layout.addWidget(self.answer_true_label)
         layout.addWidget(self.answer_false_label)
@@ -58,10 +63,10 @@ class TrueFalseAnswerWidget(AnswerWidget):
         self.setLayout(layout)
 
     def flip(self):
-        if self.answer == "0":
-            self.answer_true_label.setVisible(not self.answer_true_label.isVisible())
-        else:
+        if not self.answer == "False":
             self.answer_false_label.setVisible(not self.answer_false_label.isVisible())
+        else:
+            self.answer_true_label.setVisible(not self.answer_true_label.isVisible())
 
 
 class MultipleChoiceAnswer(AnswerWidget):
@@ -76,6 +81,7 @@ class MultipleChoiceAnswer(AnswerWidget):
         self.possible_answer_labels = []
         for key in self.possibleAnswers.keys():
             possible_answer_label = QLabel(key)
+            possible_answer_label.setStyleSheet("font-size: 16px")
             self.possible_answer_labels.append(possible_answer_label)
             layout.addWidget(possible_answer_label)
 
@@ -93,7 +99,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     widget = TextAnswerWidget("text")
-    # widget = TrueFalseAnswerWidget("0")
+    # widget = TrueFalseAnswerWidget("False")
     # widget = MultipleChoiceAnswer('{"name":0, "age":0, "car":1}')
     widget.show()
     sys.exit(app.exec())

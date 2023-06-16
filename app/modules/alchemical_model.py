@@ -11,7 +11,7 @@ from . import (
     get_universal_session,
 )
 import logging
-from modules import AlchemizedColumn
+from . import AlchemizedColumn
 
 
 log = logging.getLogger(__name__)

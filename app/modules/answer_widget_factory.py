@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     text_flashcard = Flashcard("pytanie text", "odpowiedz text", 0)
-    true_false_flashcard = Flashcard("pytanie true false", "0", 1)
+    true_false_flashcard = Flashcard("pytanie true false", "False", 1)
     multiple_choice_flashcard = Flashcard(
         "pytanie multiple choice", '{"name":0, "age":0, "car":1}', 2
     )

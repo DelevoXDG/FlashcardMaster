@@ -170,9 +170,7 @@ padding-left: 8px;
            <string>Start studying in Flip Mode</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Flip Mode</string>
@@ -203,9 +201,7 @@ background-color: rgba(165, 165, 165, 30)
            <string>Start studying in Quiz Mode</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Quiz Mode</string>

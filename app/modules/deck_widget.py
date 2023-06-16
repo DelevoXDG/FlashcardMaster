@@ -36,6 +36,8 @@ from . import (
 
 from .flashcard_editor_widget import FlashcardEditorWidget
 
+from sqlalchemy.sql.elements import Null
+
 import logging
 
 log = logging.getLogger(__name__)
@@ -149,6 +151,11 @@ class DeckWidget(QWidget):
 
         cur_category_id = self.deck.Category_id
         new_category_id = self.category_combo_box.currentData()
+
+        if isinstance(cur_category_id, Null):
+            cur_category_id = None
+        if isinstance(new_category_id, Null):
+            new_category_id = None
 
         cur_properties = [cur_name, cur_category_id]
         new_properties = [new_name, new_category_id]

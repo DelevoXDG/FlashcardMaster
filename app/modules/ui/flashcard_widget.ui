@@ -39,7 +39,7 @@
      <widget class="QLabel" name="question_label">
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>20</pointsize>
        </font>
       </property>
       <property name="text">

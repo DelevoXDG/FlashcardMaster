@@ -46,9 +46,7 @@
     <string>Add flashcard to the deck</string>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
@@ -85,9 +83,7 @@ background-color: rgba(165, 165, 165, 30)
     <string>Delete flashcard from the deck</string>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
@@ -185,9 +181,7 @@ padding-left: 8px;
     <string>Save changes</string>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>

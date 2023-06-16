@@ -71,9 +71,7 @@
      <string>Create study playlist</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -110,9 +108,7 @@ background-color: rgba(165, 165, 165, 30)
      <string>Import data</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -149,9 +145,7 @@ background-color: rgba(165, 165, 165, 30)
      <string>Export data</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -197,6 +191,12 @@ background-color: rgba(165, 165, 165, 30)
       <height>40</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <pointsize>16</pointsize>
@@ -209,9 +209,7 @@ background-color: rgba(165, 165, 165, 30)
      <string>Add decks of flashcards</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -248,9 +246,7 @@ background-color: rgba(165, 165, 165, 30)
      <string>Delete decks of flashcards</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -287,9 +283,7 @@ background-color: rgba(165, 165, 165, 30)
      <string>Show statistics</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -326,9 +320,7 @@ background-color: rgba(165, 165, 165, 30)
      <string>Merge decks of flashcards</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton:hover {
-background-color: rgba(165, 165, 165, 30)
-}</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
