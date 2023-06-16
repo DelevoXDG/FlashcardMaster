@@ -50,6 +50,7 @@ class MainWindow(QMainWindow):
         # dbtest.add_sample_flashcards()
         # dbtest.print_all_flashcards()
         dbtest.print_correct_answers()
+        # dbtest.add_more_sample_flashcards()
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         ui_path = os.path.join(current_dir, "ui", "main_window.ui")

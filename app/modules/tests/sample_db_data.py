@@ -3,7 +3,8 @@ from .. import (
     Deck,
     Flashcard,
     Category,
-    FlashcardAnswer, enums,
+    FlashcardAnswer,
+    enums,
 )
 import sqlalchemy
 import logging
@@ -119,7 +120,70 @@ def add_sample_flashcards():
         Deck=mathematics_deck,
     )
 
-    session.add_all([flashcard1, flashcard2, flashcard3])
+
+def add_more_sample_flashcards():
+    session = get_scoped_session()
+
+    # Retrieve the Mathematics deck
+    mathematics_deck = session.query(Deck).filter_by(title="Basic Facts").first()
+
+    # Create and add more sample flashcards for the Mathematics deck
+    flashcard4 = Flashcard(
+        card_type=enums.CardType.TrueFalse,
+        question="Is the Earth round?",
+        answer="True",
+        difficulty_level=enums.DifficultyLevel.Easy,
+        Deck=mathematics_deck,
+    )
+    flashcard5 = Flashcard(
+        card_type=enums.CardType.MultipleChoice,
+        question="What is the capital of France?",
+        answer='{"Paris": 1, "London": 0, "Berlin": 0, "Rome": 0}',
+        difficulty_level=enums.DifficultyLevel.Medium,
+        Deck=mathematics_deck,
+    )
+    flashcard6 = Flashcard(
+        card_type=enums.CardType.Text,
+        question="Solve the equation: 2x + 5 = 15",
+        answer="x = 5",
+        difficulty_level=enums.DifficultyLevel.Hard,
+        Deck=mathematics_deck,
+    )
+
+    session.add_all([flashcard4, flashcard5, flashcard6])
+
+    # Retrieve the History deck
+    history_deck = session.query(Deck).filter_by(title="History").first()
+
+    # Create and add more sample flashcards for the History deck
+    flashcard7 = Flashcard(
+        card_type=enums.CardType.TrueFalse,
+        question="Did Christopher Columbus discover America?",
+        answer="False",
+        difficulty_level=enums.DifficultyLevel.Easy,
+        Deck=history_deck,
+    )
+    flashcard8 = Flashcard(
+        card_type=enums.CardType.Text,
+        question="When was rome founded?",
+        answer="753 BC",
+        difficulty_level=enums.DifficultyLevel.Medium,
+        Deck=history_deck,
+    )
+    flashcard9 = Flashcard(
+        card_type=enums.CardType.MultipleChoice,
+        question="When the US were founded?",
+        answer='{"1776": 1, "1779": 0, "1797": 0, "1767": 0}',
+        difficulty_level=enums.DifficultyLevel.Hard,
+        Deck=history_deck,
+    )
+
+    session.add_all([flashcard7, flashcard8, flashcard9])
+
+    session.commit()
+    session.close()
+
+    # session.add_all([flashcard1, flashcard2, flashcard3])
     # Retrieve the History deck
     history_deck = session.query(Deck).filter_by(title="History").first()
 
