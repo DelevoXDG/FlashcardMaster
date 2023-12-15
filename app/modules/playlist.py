@@ -67,6 +67,8 @@ class Playlist:
         #             else 0,
         #         )
         #     )
+
+        # TODO: (#24) Add strategy pattern for sorting flashcards
         if study_type == StudyType.Learn:
             reverse = False
         elif study_type == StudyType.Review:
