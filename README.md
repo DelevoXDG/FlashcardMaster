@@ -14,6 +14,7 @@
 - [SRS](./docs/srs.md)
 - [Class Diagram](./docs/Class_Diagram/class_diagram.pdf)
 - [Use Case Diagram](./docs/Use_Case_Diagram/use_case_diagram.pdf)
+- [Design Patterns](./docs/design_patterns.md)
 
 ## Prerequisites
 - PyQt6
