@@ -23,7 +23,7 @@ class FlashcardWidget(QWidget):
         ui_path = os.path.join(current_dir, "ui", "flashcard_widget.ui")
 
         loadUi(ui_path, self)
-        answer_widget_factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(
+        answer_widget_factory = AnswerWidgetFactory.get_correct_answer_widget_factory(
             self.flashcard
         )
 
