@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QApplication, QSizePolicy
 from PyQt6.QtCore import Qt
 import json
@@ -10,9 +12,11 @@ class AnswerWidget(QWidget):
         self.reveal_answer = False
         self.setup_ui()
 
+    @abstractmethod
     def setup_ui(self):
         pass
 
+    @abstractmethod
     def flip(self):
         pass
 

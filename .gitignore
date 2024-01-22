@@ -342,15 +342,11 @@ _ReSharper*/
 *.docstates
 *.swp
 *.*~
-*.gpState
 *.ReSharper*
 *.preflight
 *.nocommit
 #Ignore Recovery Files made by Excel
 ~$*.xlsx
-*.rdl.data
-
-*.jfm
 
 #======================================================================================
 # The below section could possibly be removed as these should be ignored by the above.

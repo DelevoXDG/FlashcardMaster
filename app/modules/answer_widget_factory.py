@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from . import enums
 from .answer_widget import (
     AnswerWidget,
@@ -9,14 +11,16 @@ from PyQt6.QtWidgets import QApplication
 
 
 class AnswerWidgetFactory:
+    @abstractmethod
     def __init__(self) -> None:
         pass
 
+    @abstractmethod
     def create(self, flashcard, parent=None):
         pass
 
     @staticmethod
-    def getCorrectAnswerWidgetFactory(flashcard):
+    def get_correct_answer_widget_factory(flashcard):
         if flashcard.card_type == enums.CardType.Text:
             return TextAnswerWidgetFactory()
         elif flashcard.card_type == enums.CardType.TrueFalse:
@@ -67,7 +71,7 @@ if __name__ == "__main__":
         "pytanie multiple choice", '{"name":0, "age":0, "car":1}', 2
     )
 
-    factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(text_flashcard)
+    factory = AnswerWidgetFactory.get_correct_answer_widget_factory(text_flashcard)
     # factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(true_false_flashcard)
     # factory = AnswerWidgetFactory.getCorrectAnswerWidgetFactory(multiple_choice_flashcard)
 
